@@ -2,22 +2,40 @@
     <div>
         <timeline-form />
         <div class="timeline__posts">
-            <timeline-post
-                v-for="x in 10"
-                :key="x"
+            <timeline-post 
+                v-for="post in posts" 
+                :key="post.id" 
+                :post="post"
             />
         </div>
     </div>
 </template>
 
 <script>
-export default {
+    import axios from "axios";
+    import { mapGetters, mapActions } from "vuex"
 
-}
+    export default {
+        computed: {
+            ...mapGetters({
+                posts : 'posts'
+            })
+        },
+        
+        methods :{
+            ...mapActions({
+                getPosts : 'getPosts'
+            })
+        },
+
+        mounted () {
+            this.getPosts();
+        },
+    }
 </script>
 
 <style>
-.timeline__posts{
-    margin-top: 40px;
-}
+    .timeline__posts {
+        margin-top: 40px;
+    }
 </style>

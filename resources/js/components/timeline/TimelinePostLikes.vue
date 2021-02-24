@@ -4,7 +4,7 @@
             2 likes from 2 people
             (including you)
         </span>
-         <ul class="list-inline mb-0">
+        <ul class="list-inline mb-0">
             <li class="list-inline-item">
                 <a href="">Like it</a>
             </li>
@@ -14,9 +14,9 @@
 </template>
 
 <script>
-export default {
+    export default {
 
-}
+    }
 </script>
 
 <style>
