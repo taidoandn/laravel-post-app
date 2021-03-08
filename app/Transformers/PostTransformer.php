@@ -14,9 +14,10 @@ class PostTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        'author'
+        'author',
+        'likers',
     ];
-    
+
     /**
      * List of resources possible to include
      *
@@ -25,7 +26,7 @@ class PostTransformer extends TransformerAbstract
     protected $availableIncludes = [
         //
     ];
-    
+
     /**
      * A Fractal transformer.
      *
@@ -35,12 +36,18 @@ class PostTransformer extends TransformerAbstract
     {
         return [
             'id' => $post->id,
-            'body' => $post->body
+            'body' => $post->body,
+            'likes' => $post->likes->count()
         ];
     }
 
     public function includeAuthor(Post $post)
     {
         return $this->item($post->user, new UserTransformer);
+    }
+
+    public function includeLikers(Post $post)
+    {
+        return $this->collection($post->likers, new UserTransformer);
     }
 }

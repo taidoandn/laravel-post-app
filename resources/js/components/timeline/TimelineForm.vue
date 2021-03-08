@@ -14,27 +14,27 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+    import { mapActions } from 'vuex'
 
-export default {
-    data() {
-        return {
-            form: {
-                body: '',
-            },
-        }
-    },
-    methods: {
-        ...mapActions({
-            createPost: 'createPost',
-        }),
-
-        async submit() {
-            await this.createPost(this.form)
-            this.form.body = ''
+    export default {
+        data() {
+            return {
+                form: {
+                    body: '',
+                },
+            }
         },
-    },
-}
+        methods: {
+            ...mapActions({
+                createPost: 'createPost',
+            }),
+
+            async submit() {
+                await this.createPost(this.form)
+                this.form.body = ''
+            },
+        },
+    }
 </script>
 
 <style></style>

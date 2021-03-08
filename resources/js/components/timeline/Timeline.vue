@@ -8,30 +8,30 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mapGetters, mapActions } from "vuex";
+    import axios from 'axios'
+    import { mapGetters, mapActions } from 'vuex'
 
-export default {
-    computed: {
-        ...mapGetters({
-            posts: "posts"
-        })
-    },
+    export default {
+        computed: {
+            ...mapGetters({
+                posts: 'posts',
+            }),
+        },
 
-    methods: {
-        ...mapActions({
-            getPosts: "getPosts"
-        })
-    },
+        methods: {
+            ...mapActions({
+                getPosts: 'getPosts',
+            }),
+        },
 
-    mounted() {
-        this.getPosts();
+        mounted() {
+            this.getPosts()
+        },
     }
-};
 </script>
 
 <style>
-.timeline__posts {
-    margin-top: 40px;
-}
+    .timeline__posts {
+        margin-top: 40px;
+    }
 </style>
