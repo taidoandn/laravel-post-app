@@ -5,6 +5,7 @@ namespace App\Transformers;
 use App\Models\Post;
 use App\Transformers\UserTransformer;
 use League\Fractal\TransformerAbstract;
+use App\Transformers\PostUserTransformer;
 
 class PostTransformer extends TransformerAbstract
 {
@@ -16,6 +17,7 @@ class PostTransformer extends TransformerAbstract
     protected $defaultIncludes = [
         'author',
         'likers',
+        'user',
     ];
 
     /**
@@ -44,6 +46,11 @@ class PostTransformer extends TransformerAbstract
     public function includeAuthor(Post $post)
     {
         return $this->item($post->user, new UserTransformer);
+    }
+
+    public function includeUser(Post $post)
+    {
+        return $this->item($post, new PostUserTransformer);
     }
 
     public function includeLikers(Post $post)
