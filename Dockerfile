@@ -34,4 +34,6 @@ RUN chown -R www:www .
 # Change current user to www
 USER www
 
+EXPOSE 6001
+
 CMD supervisord -n -c /etc/supervisor/supervisord.conf
