@@ -16,8 +16,8 @@
 </template>
 
 <script>
-    import pluralize from 'pluralize'
-    import { mapActions } from 'vuex'
+    import pluralize from 'pluralize';
+    import { mapActions } from 'vuex';
     export default {
         props: {
             post: {
@@ -32,9 +32,9 @@
                     this.post.user.data.owner ||
                     this.post.user.data.likes_remaining <= 0
                 ) {
-                    return false
+                    return false;
                 }
-                return true
+                return true;
             },
         },
 
@@ -46,10 +46,10 @@
             }),
 
             like() {
-                this.likePost(this.post.id)
+                this.likePost(this.post.id);
             },
         },
-    }
+    };
 </script>
 
 <style></style>

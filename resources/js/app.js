@@ -1,4 +1,4 @@
-import store from "./store"
+import store from './store';
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6,6 +6,7 @@ import store from "./store"
  */
 
 require('./bootstrap');
+require('./echo');
 
 window.Vue = require('vue');
 
@@ -20,10 +21,22 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('timeline', require('./components/timeline/Timeline.vue').default);
-Vue.component('timeline-form', require('./components/timeline/TimelineForm.vue').default);
-Vue.component('timeline-post', require('./components/timeline/TimelinePost.vue').default);
-Vue.component('timeline-post-likes', require('./components/timeline/TimelinePostLikes.vue').default);
+Vue.component(
+    'timeline',
+    require('./components/timeline/Timeline.vue').default,
+);
+Vue.component(
+    'timeline-form',
+    require('./components/timeline/TimelineForm.vue').default,
+);
+Vue.component(
+    'timeline-post',
+    require('./components/timeline/TimelinePost.vue').default,
+);
+Vue.component(
+    'timeline-post-likes',
+    require('./components/timeline/TimelinePostLikes.vue').default,
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -33,5 +46,5 @@ Vue.component('timeline-post-likes', require('./components/timeline/TimelinePost
 
 const app = new Vue({
     el: '#app',
-    store
+    store,
 });

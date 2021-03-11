@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Events\PostLiked;
 use App\Transformers\PostTransformer;
 
 class PostLikeController extends Controller
@@ -20,6 +21,8 @@ class PostLikeController extends Controller
         $post->likes()->create([
             'user_id' => auth()->id(),
         ]);
+
+        broadcast(new PostLiked($post))->toOthers();
 
         return fractal()
             ->item($post->fresh())

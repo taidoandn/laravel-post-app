@@ -25,7 +25,7 @@
                 required: true,
             },
         },
-    }
+    };
 </script>
 
 <style>

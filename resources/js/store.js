@@ -1,8 +1,8 @@
-import Vuex from 'vuex'
-import Vue from 'vue'
-import axios from 'axios'
+import Vuex from 'vuex';
+import Vue from 'vue';
+import axios from 'axios';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
@@ -11,42 +11,52 @@ export default new Vuex.Store({
 
     getters: {
         posts(state) {
-            return state.posts
+            return state.posts;
         },
     },
     mutations: {
         SET_POSTS(state, posts) {
-            state.posts = posts
+            state.posts = posts;
         },
 
-        UPDATE_POSTS(state, post) {
+        UPDATE_POST(state, post) {
             state.posts = state.posts.map((p) => {
                 if (p.id === post.id) {
-                    return post
+                    return post;
                 }
-                return p
-            })
+                return p;
+            });
         },
-        
+
         PREPEND_POST(state, post) {
-            state.posts.unshift(post)
+            state.posts.unshift(post);
         },
     },
 
     actions: {
         async getPosts({ commit }) {
-            let posts = await axios.get('api/posts')
-            commit('SET_POSTS', posts.data.data)
+            let posts = await axios.get('api/posts');
+            commit('SET_POSTS', posts.data.data);
+        },
+
+        async getPost({ commit }, id) {
+            let post = await axios.get(`api/posts/${id}`);
+            commit('PREPEND_POST', post.data.data);
+        },
+
+        async refreshPost({ commit }, id) {
+            let post = await axios.get(`api/posts/${id}`);
+            commit('UPDATE_POST', post.data.data);
         },
 
         async createPost({ commit }, data) {
-            let post = await axios.post('api/posts', data)
-            commit('PREPEND_POST', post.data.data)
+            let post = await axios.post('api/posts', data);
+            commit('PREPEND_POST', post.data.data);
         },
 
         async likePost({ commit }, id) {
-            let post = await axios.post(`api/posts/${id}/likes`)
-            commit('UPDATE_POSTS', post.data.data)
+            let post = await axios.post(`api/posts/${id}/likes`);
+            commit('UPDATE_POST', post.data.data);
         },
     },
-})
+});

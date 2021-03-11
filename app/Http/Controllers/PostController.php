@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Transformers\PostTransformer;
+use App\Events\PostCreated;
 use Illuminate\Http\Request;
+use App\Transformers\PostTransformer;
 
 class PostController extends Controller
 {
@@ -41,6 +42,8 @@ class PostController extends Controller
 
         $post = $request->user()->posts()->create($request->only('body'));
 
+        broadcast(new PostCreated($post))->toOthers();
+
         return fractal()
             ->item($post)
             ->transformWith(new PostTransformer())
@@ -53,31 +56,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return fractal()
+            ->item($post)
+            ->transformWith(new PostTransformer())
+            ->toArray();
     }
 }

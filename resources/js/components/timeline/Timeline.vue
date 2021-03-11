@@ -8,8 +8,8 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    import { mapGetters, mapActions } from 'vuex'
+    import axios from 'axios';
+    import { mapGetters, mapActions } from 'vuex';
 
     export default {
         computed: {
@@ -25,9 +25,9 @@
         },
 
         mounted() {
-            this.getPosts()
+            this.getPosts();
         },
-    }
+    };
 </script>
 
 <style>

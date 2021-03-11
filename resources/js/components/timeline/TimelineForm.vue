@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions } from 'vuex';
 
     export default {
         data() {
@@ -22,7 +22,7 @@
                 form: {
                     body: '',
                 },
-            }
+            };
         },
         methods: {
             ...mapActions({
@@ -30,11 +30,11 @@
             }),
 
             async submit() {
-                await this.createPost(this.form)
-                this.form.body = ''
+                await this.createPost(this.form);
+                this.form.body = '';
             },
         },
-    }
+    };
 </script>
 
 <style></style>
