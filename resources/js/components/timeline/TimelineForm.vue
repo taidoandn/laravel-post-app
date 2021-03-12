@@ -1,13 +1,14 @@
 <template>
     <form action="#" @submit.prevent="submit">
         <div class="form-group">
-            <label for="body" class="sr-body"></label>
-            <textarea
-                class="form-control"
-                placeholder="Share something"
-                rows="3"
-                v-model="form.body"
-            ></textarea>
+            <markdown :body="form.body">
+                <textarea
+                    class="form-control"
+                    placeholder="Share something"
+                    rows="3"
+                    v-model="form.body"
+                ></textarea>
+            </markdown>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Post</button>
     </form>

@@ -37,6 +37,14 @@ Vue.component(
     'timeline-post-likes',
     require('./components/timeline/TimelinePostLikes.vue').default,
 );
+Vue.component(
+    'markdown',
+    require('./components/timeline/Markdown.vue').default,
+);
+Vue.component(
+    'markdown-display',
+    require('./components/timeline/MarkdownDisplay.vue').default,
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
