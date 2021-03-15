@@ -10946,7 +10946,7 @@ a.text-dark:focus {
 
 /*
 
-Darcula color scheme from the JetBrains family of IDEs
+Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
 
 */
 
@@ -10954,67 +10954,84 @@ Darcula color scheme from the JetBrains family of IDEs
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #2b2b2b;
-  color: #bababa;
+  background: #fdf6e3;
+  color: #657b83;
 }
 
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
+.hljs-comment,
+.hljs-quote {
+  color: #93a1a1;
 }
 
-.hljs-bullet,
-.hljs-quote,
-.hljs-link,
+/* Solarized Green */
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-addition {
+  color: #859900;
+}
+
+/* Solarized Cyan */
+
 .hljs-number,
-.hljs-regexp,
-.hljs-literal {
-  color: #6896ba;
+.hljs-string,
+.hljs-meta .hljs-meta-string,
+.hljs-literal,
+.hljs-doctag,
+.hljs-regexp {
+  color: #2aa198;
 }
 
-.hljs-code,
+/* Solarized Blue */
+
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.hljs-selector-id,
 .hljs-selector-class {
-  color: #a6e22e;
+  color: #268bd2;
+}
+
+/* Solarized Yellow */
+
+.hljs-attribute,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title,
+.hljs-type {
+  color: #b58900;
+}
+
+/* Solarized Orange */
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-subst,
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-link {
+  color: #cb4b16;
+}
+
+/* Solarized Red */
+
+.hljs-built_in,
+.hljs-deletion {
+  color: #dc322f;
+}
+
+.hljs-formula {
+  background: #eee8d5;
 }
 
 .hljs-emphasis {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-section,
-.hljs-attribute,
-.hljs-name,
-.hljs-variable {
-  color: #cb7832;
-}
-
-.hljs-params {
-  color: #b9b9b9;
-}
-
-.hljs-string {
-  color: #6a8759;
-}
-
-.hljs-subst,
-.hljs-type,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-symbol,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-template-tag,
-.hljs-template-variable,
-.hljs-addition {
-  color: #e0c46c;
-}
-
-.hljs-comment,
-.hljs-deletion,
-.hljs-meta {
-  color: #7f7f7f;
+.hljs-strong {
+  font-weight: bold;
 }
 

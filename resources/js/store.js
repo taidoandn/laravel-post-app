@@ -6,15 +6,22 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        errors: null,
         posts: [],
     },
 
     getters: {
+        errors(state) {
+            return state.errors;
+        },
         posts(state) {
             return state.posts;
         },
     },
     mutations: {
+        SET_ERRORS(state, errors) {
+            state.errors = errors;
+        },
         SET_POSTS(state, posts) {
             state.posts = posts;
         },
@@ -50,8 +57,12 @@ export default new Vuex.Store({
         },
 
         async createPost({ commit }, data) {
-            let post = await axios.post('api/posts', data);
-            commit('PREPEND_POST', post.data.data);
+            try {
+                let post = await axios.post('api/posts', data);
+                commit('PREPEND_POST', post.data.data);
+            } catch (error) {
+                commit('SET_ERRORS', error.response.data.errors);
+            }
         },
 
         async likePost({ commit }, id) {

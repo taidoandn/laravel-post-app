@@ -32,8 +32,6 @@
 </template>
 
 <script>
-    import autosize from 'autosize';
-
     export default {
         props: ['body'],
         methods: {
@@ -41,9 +39,5 @@
                 return `${hash}${tabName}`;
             },
         },
-        updated() {
-            autosize(this.$el.querySelector('textarea'));
-        },
-        mounted() {},
     };
 </script>

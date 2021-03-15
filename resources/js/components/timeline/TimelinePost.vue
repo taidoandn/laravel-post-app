@@ -9,9 +9,7 @@
             <div class="font-weight-bold">
                 {{ post.author.data.name }}
             </div>
-            <p>
-                {{ post.body }}
-            </p>
+            <markdown-display :markdown="post.body" />
             <timeline-post-likes :post="post" />
         </div>
     </div>
