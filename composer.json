@@ -16,8 +16,7 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
-        "pusher/pusher-php-server": "~3.0",
-        "spatie/laravel-fractal": "^5.8"
+        "pusher/pusher-php-server": "~3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

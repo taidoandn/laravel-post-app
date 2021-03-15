@@ -2200,6 +2200,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -95872,11 +95874,11 @@ var render = function() {
     _vm._v(" "),
     _c("ul", { staticClass: "list-inline mb-0" }, [
       _vm.canLike
-        ? _c("li", { staticClass: "list-inline-item" }, [
+        ? _c("li", { staticClass: "list-inline-item mt-2" }, [
             _c(
-              "a",
+              "button",
               {
-                attrs: { href: "#" },
+                staticClass: "btn btn-block btn-primary",
                 on: {
                   click: function($event) {
                     $event.preventDefault()
@@ -95884,7 +95886,10 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Like it")]
+              [
+                _c("i", { staticClass: "fa fa-thumbs-up" }),
+                _vm._v(" Like\n            ")
+              ]
             )
           ])
         : _vm._e()

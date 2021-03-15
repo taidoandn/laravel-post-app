@@ -8,8 +8,10 @@
             </template>
         </span>
         <ul class="list-inline mb-0">
-            <li class="list-inline-item" v-if="canLike">
-                <a href="#" @click.prevent="like">Like it</a>
+            <li class="list-inline-item mt-2" v-if="canLike">
+                <button class="btn btn-block btn-primary" @click.prevent="like">
+                    <i class="fa fa-thumbs-up"></i> Like
+                </button>
             </li>
         </ul>
     </div>

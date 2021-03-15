@@ -26,7 +26,7 @@ class PostUserResource extends JsonResource
         if (!$user = auth()->user()) {
             return false;
         }
-        return $this->likers->contains(null);
+        return $this->likers->contains($user);
     }
 
     protected function countLikesRemaining()

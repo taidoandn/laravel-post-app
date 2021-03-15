@@ -6,7 +6,6 @@ use App\Models\Post;
 use App\Events\PostCreated;
 use Illuminate\Http\Request;
 use App\Http\Resources\PostResource;
-use App\Transformers\PostTransformer;
 
 class PostController extends Controller
 {
@@ -25,11 +24,6 @@ class PostController extends Controller
         $posts = Post::latest()->get();
 
         return PostResource::collection($posts);
-
-        // return fractal()
-        //     ->collection($posts)
-        //     ->transformWith(new PostTransformer())
-        //     ->toArray();
     }
 
     /**
@@ -49,11 +43,6 @@ class PostController extends Controller
         broadcast(new PostCreated($post))->toOthers();
 
         return new PostResource($post);
-
-        // return fractal()
-        //     ->item($post)
-        //     ->transformWith(new PostTransformer())
-        //     ->toArray();
     }
 
     /**
@@ -65,10 +54,5 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return new PostResource($post);
-
-        // return fractal()
-        //     ->item($post)
-        //     ->transformWith(new PostTransformer())
-        //     ->toArray();
     }
 }
