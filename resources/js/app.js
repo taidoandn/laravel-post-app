@@ -1,5 +1,6 @@
 import store from './store';
 import highlight from './directives/highlight';
+import TextareaAutosize from 'vue-textarea-autosize';
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -10,7 +11,15 @@ require('./bootstrap');
 require('./echo');
 
 window.Vue = require('vue');
-
+window.toastr = require('toastr');
+toastr.options = {
+    progressBar: true,
+    positionClass: 'toast-top-right',
+    preventDuplicates: true,
+    showDuration: '300',
+    hideDuration: '1000',
+    timeOut: '3000',
+};
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -26,26 +35,6 @@ Vue.component(
     'timeline',
     require('./components/timeline/Timeline.vue').default,
 );
-Vue.component(
-    'timeline-form',
-    require('./components/timeline/TimelineForm.vue').default,
-);
-Vue.component(
-    'timeline-post',
-    require('./components/timeline/TimelinePost.vue').default,
-);
-Vue.component(
-    'timeline-post-likes',
-    require('./components/timeline/TimelinePostLikes.vue').default,
-);
-Vue.component(
-    'markdown',
-    require('./components/timeline/MDEditor.vue').default,
-);
-Vue.component(
-    'markdown-display',
-    require('./components/timeline/MarkdownDisplay.vue').default,
-);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -55,6 +44,7 @@ Vue.component(
 
 //
 
+Vue.use(TextareaAutosize);
 Vue.directive('highlightjs', highlight);
 
 const app = new Vue({

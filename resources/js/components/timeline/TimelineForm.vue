@@ -1,14 +1,15 @@
 <template>
     <form action="#" @submit.prevent="submit">
         <div class="form-group">
-            <markdown :body="form.body">
-                <textarea
+            <md-editor :body="form.body" name="addForm">
+                <TextareaAutosize
                     class="form-control"
                     placeholder="Share something"
-                    rows="3"
                     v-model="form.body"
-                    v-bind:class="{ 'is-invalid': errors && errors.body }"
-                ></textarea>
+                    :class="{ 'is-invalid': errors && errors.body }"
+                    :min-height="100"
+                    :max-height="350"
+                ></TextareaAutosize>
                 <span
                     class="invalid-feedback"
                     role="alert"
@@ -16,8 +17,8 @@
                 >
                     <strong>{{ errors.body[0] }}</strong>
                 </span>
-            </markdown>
-            <small class="form-text text-muted">
+            </md-editor>
+            <small class="form-text text-info">
                 Markdown and code highlight are supported.
             </small>
         </div>
@@ -27,13 +28,18 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import MDEditor from './MDEditor.vue';
 
     export default {
+        components: {
+            'md-editor': MDEditor,
+        },
         data() {
             return {
                 form: {
                     body: '',
                 },
+                errors: null,
             };
         },
         methods: {
@@ -41,15 +47,18 @@
                 createPost: 'createPost',
             }),
 
-            async submit() {
-                await this.createPost(this.form);
-                this.form.body = '';
+            submit() {
+                this.createPost(this.form)
+                    .then(() => {
+                        this.form.body = '';
+                        toastr.success('Submit successful!', 'Success!');
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            this.errors = error.response.data.errors;
+                        }
+                    });
             },
-        },
-        computed: {
-            ...mapGetters({
-                errors: 'errors',
-            }),
         },
     };
 </script>

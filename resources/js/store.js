@@ -6,33 +6,34 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        errors: null,
+        selectedPostId: null,
         posts: [],
     },
 
     getters: {
-        errors(state) {
-            return state.errors;
+        selectedPostId(state) {
+            return state.selectedPostId;
         },
         posts(state) {
             return state.posts;
         },
     },
     mutations: {
-        SET_ERRORS(state, errors) {
-            state.errors = errors;
+        SET_SELECTED_POST_ID(state, id) {
+            state.selectedPostId = id;
         },
         SET_POSTS(state, posts) {
             state.posts = posts;
         },
 
         UPDATE_POST(state, post) {
-            state.posts = state.posts.map((p) => {
-                if (p.id === post.id) {
-                    return post;
-                }
-                return p;
-            });
+            let index = state.posts.findIndex((p) => p.id === post.id);
+            if (index !== -1) {
+                state.posts.splice(index, 1, post);
+            }
+        },
+        REMOVE_POST(state, id) {
+            state.posts = state.posts.filter((p) => p.id !== id);
         },
 
         PREPEND_POST(state, post) {
@@ -56,13 +57,33 @@ export default new Vuex.Store({
             commit('UPDATE_POST', post.data.data);
         },
 
-        async createPost({ commit }, data) {
-            try {
-                let post = await axios.post('api/posts', data);
-                commit('PREPEND_POST', post.data.data);
-            } catch (error) {
-                commit('SET_ERRORS', error.response.data.errors);
-            }
+        createPost({ commit }, data) {
+            return axios.post('api/posts', data).then((res) => {
+                commit('PREPEND_POST', res.data.data);
+            });
+        },
+
+        updatePost({ commit }, post) {
+            return axios
+                .put(`api/posts/${post.id}`, {
+                    body: post.body,
+                })
+                .then((res) => {
+                    commit('UPDATE_POST', res.data.data);
+                });
+        },
+
+        deletePost({ commit }, id) {
+            return axios
+                .delete(`api/posts/${id}`)
+                .then((res) => {
+                    commit('REMOVE_POST', id);
+                })
+                .catch((error) => console.log(error));
+        },
+
+        setSelectedPostId({ commit }, id) {
+            commit('SET_SELECTED_POST_ID', id);
         },
 
         async likePost({ commit }, id) {

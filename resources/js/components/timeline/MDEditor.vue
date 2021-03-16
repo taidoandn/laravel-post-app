@@ -32,11 +32,23 @@
 </template>
 
 <script>
+    import MarkdownDisplay from './MarkdownDisplay.vue';
+
     export default {
-        props: ['body'],
+        components: { MarkdownDisplay },
+        props: {
+            body: {
+                type: String,
+                required: true,
+            },
+            name: {
+                type: String,
+                required: true,
+            },
+        },
         methods: {
             tabId(tabName, hash = '') {
-                return `${hash}${tabName}`;
+                return `${hash}${tabName}${this.name}`;
             },
         },
     };

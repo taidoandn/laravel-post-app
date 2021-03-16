@@ -1,19 +1,21 @@
 <template>
     <div>
-        <span class="text-secondary" v-if="post.likes">
-            {{ pluralize('like', post.likes, true) }} from
-            {{ pluralize('person', post.likers.data.length, true) }}
-            <template v-if="post.user.data.liked">
+        <span class="text-secondary" v-if="post.likes_count">
+            {{ pluralize('like', post.likes_count, true) }} from
+            {{ pluralize('person', post.likers.length, true) }}
+            <template v-if="post.user.liked">
                 (including you)
             </template>
         </span>
-        <ul class="list-inline mb-0">
-            <li class="list-inline-item mt-2" v-if="canLike">
-                <button class="btn btn-block btn-primary" @click.prevent="like">
-                    <i class="fa fa-thumbs-up"></i> Like
-                </button>
-            </li>
-        </ul>
+        <div>
+            <button
+                class="btn btn-primary btn-sm"
+                @click.prevent="like"
+                v-if="canLike"
+            >
+                <i class="fa fa-thumbs-up"></i> Like
+            </button>
+        </div>
     </div>
 </template>
 
@@ -31,8 +33,8 @@
         computed: {
             canLike() {
                 if (
-                    this.post.user.data.owner ||
-                    this.post.user.data.likes_remaining <= 0
+                    this.post.user.owner ||
+                    this.post.user.likes_remaining <= 0
                 ) {
                     return false;
                 }

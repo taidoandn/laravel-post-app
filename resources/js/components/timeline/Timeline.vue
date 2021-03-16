@@ -10,8 +10,11 @@
 <script>
     import axios from 'axios';
     import { mapGetters, mapActions } from 'vuex';
+    import TimelineForm from './TimelineForm.vue';
+    import TimelinePost from './TimelinePost.vue';
 
     export default {
+        components: { TimelineForm, TimelinePost },
         computed: {
             ...mapGetters({
                 posts: 'posts',

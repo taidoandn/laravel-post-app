@@ -55,4 +55,21 @@ class PostController extends Controller
     {
         return new PostResource($post);
     }
+
+    public function update(Request $request, Post $post)
+    {
+        $this->validate($request, [
+            'body' => 'required'
+        ]);
+        $post->update($request->only('body'));
+
+        return new PostResource($post->fresh());
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return response(null, 200);
+    }
 }

@@ -19,16 +19,10 @@ class PostResource extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'likes' => $this->likes->count(),
-            'author' => [
-                'data' => new UserResource($this->user)
-            ],
-            'likers' => [
-                'data' => UserResource::collection($this->likers)
-            ],
-            'user' => [
-                'data' => new PostUserResource($this)
-            ]
+            'likes_count' => $this->likes->count(),
+            'author' => new UserResource($this->user),
+            'likers' => UserResource::collection($this->likers),
+            'user' => new PostUserResource($this)
         ];
     }
 }
