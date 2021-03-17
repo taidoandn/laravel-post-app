@@ -1,8 +1,8 @@
 <template>
     <div>
-        <timeline-form />
+        <add-form />
         <div class="timeline__posts">
-            <timeline-post v-for="post in posts" :key="post.id" :post="post" />
+            <post v-for="post in posts" :key="post.id" :post="post" />
         </div>
     </div>
 </template>
@@ -10,11 +10,11 @@
 <script>
     import axios from 'axios';
     import { mapGetters, mapActions } from 'vuex';
-    import TimelineForm from './TimelineForm.vue';
-    import TimelinePost from './TimelinePost.vue';
+    import AddForm from './AddForm.vue';
+    import Post from './Post.vue';
 
     export default {
-        components: { TimelineForm, TimelinePost },
+        components: { AddForm, Post },
         computed: {
             ...mapGetters({
                 posts: 'posts',

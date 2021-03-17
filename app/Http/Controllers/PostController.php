@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Events\PostCreated;
+use App\Events\PostUpdated;
 use Illuminate\Http\Request;
 use App\Http\Resources\PostResource;
 
@@ -63,7 +64,9 @@ class PostController extends Controller
         ]);
         $post->update($request->only('body'));
 
-        return new PostResource($post->fresh());
+        broadcast(new PostUpdated($post))->toOthers();
+
+        return new PostResource($post);
     }
 
     public function destroy(Post $post)

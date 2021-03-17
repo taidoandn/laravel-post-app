@@ -10,9 +10,9 @@
                 {{ post.author.name }}
             </div>
 
-            <template v-if="!isEditing">
+            <template v-if="!editing">
                 <markdown-display :markdown="post.body" />
-                <timeline-post-likes :post="post" />
+                <post-likes :post="post" />
                 <div v-if="post.user.owner">
                     <button
                         class="btn btn-outline-info btn-sm"
@@ -43,10 +43,10 @@
     import { mapActions, mapGetters } from 'vuex';
     import EditForm from './EditForm.vue';
     import MarkdownDisplay from './MarkdownDisplay.vue';
-    import TimelinePostLikes from './TimelinePostLikes.vue';
+    import PostLikes from './PostLikes.vue';
 
     export default {
-        components: { EditForm, MarkdownDisplay, TimelinePostLikes },
+        components: { EditForm, MarkdownDisplay, PostLikes },
         props: {
             post: {
                 type: Object,
@@ -61,13 +61,11 @@
         },
         methods: {
             ...mapActions({
-                setSelectedPostId: 'setSelectedPostId',
                 deletePost: 'deletePost',
             }),
             edit() {
                 this.tempBody = this.body;
                 this.editing = true;
-                this.setSelectedPostId(this.post.id);
             },
             remove(id) {
                 this.deletePost(id).then(() => {
@@ -77,15 +75,6 @@
             cancel() {
                 this.body = this.tempBody;
                 this.editing = false;
-                this.setSelectedPostId(null);
-            },
-        },
-        computed: {
-            ...mapGetters({
-                selectedPostId: 'selectedPostId',
-            }),
-            isEditing() {
-                return this.selectedPostId === this.post.id && this.editing;
             },
         },
     };

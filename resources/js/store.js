@@ -6,22 +6,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        selectedPostId: null,
         posts: [],
     },
 
     getters: {
-        selectedPostId(state) {
-            return state.selectedPostId;
-        },
         posts(state) {
             return state.posts;
         },
     },
     mutations: {
-        SET_SELECTED_POST_ID(state, id) {
-            state.selectedPostId = id;
-        },
         SET_POSTS(state, posts) {
             state.posts = posts;
         },
@@ -80,10 +73,6 @@ export default new Vuex.Store({
                     commit('REMOVE_POST', id);
                 })
                 .catch((error) => console.log(error));
-        },
-
-        setSelectedPostId({ commit }, id) {
-            commit('SET_SELECTED_POST_ID', id);
         },
 
         async likePost({ commit }, id) {
