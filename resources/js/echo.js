@@ -7,6 +7,9 @@ Echo.channel('posts')
     .listen('PostUpdated', (e) => {
         store.dispatch('refreshPost', e.post.id);
     })
+    .listen('PostDeleted', (e) => {
+        store.commit('REMOVE_POST', e.post.id);
+    })
     .listen('PostLiked', (e) => {
         store.dispatch('refreshPost', e.post.id);
     });

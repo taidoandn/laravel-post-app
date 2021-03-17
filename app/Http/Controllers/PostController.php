@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Events\PostCreated;
+use App\Events\PostDeleted;
 use App\Events\PostUpdated;
 use Illuminate\Http\Request;
 use App\Http\Resources\PostResource;
@@ -72,6 +73,8 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
+
+        broadcast(new PostDeleted($post))->toOthers();
 
         return response(null, 200);
     }

@@ -1977,6 +1977,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.createPost(this.form).then(function () {
+        _this.errors = null;
         _this.form.body = '';
         toastr.success('Submit successful!', 'Success!');
       })["catch"](function (error) {
@@ -2079,6 +2080,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _this.updatePost(_this.form).then(function (res) {
+                  _this.errors = null;
+
                   _this.$emit('post-updated');
 
                   toastr.success('Updated successful!', 'Success');
@@ -111098,6 +111101,8 @@ Echo.channel('posts').listen('PostCreated', function (e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('getPost', e.post.id);
 }).listen('PostUpdated', function (e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('refreshPost', e.post.id);
+}).listen('PostDeleted', function (e) {
+  _store__WEBPACK_IMPORTED_MODULE_0__["default"].commit('REMOVE_POST', e.post.id);
 }).listen('PostLiked', function (e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('refreshPost', e.post.id);
 });

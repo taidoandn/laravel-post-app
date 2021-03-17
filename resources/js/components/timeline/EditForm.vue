@@ -59,6 +59,7 @@
             async handleUpdate() {
                 this.updatePost(this.form)
                     .then((res) => {
+                        this.errors = null;
                         this.$emit('post-updated');
                         toastr.success('Updated successful!', 'Success');
                     })

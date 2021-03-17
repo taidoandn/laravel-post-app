@@ -50,6 +50,7 @@
             submit() {
                 this.createPost(this.form)
                     .then(() => {
+                        this.errors = null;
                         this.form.body = '';
                         toastr.success('Submit successful!', 'Success!');
                     })
