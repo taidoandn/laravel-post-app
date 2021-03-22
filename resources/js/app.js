@@ -15,7 +15,7 @@ window.toastr = require('toastr');
 toastr.options = {
     progressBar: true,
     positionClass: 'toast-top-right',
-    preventDuplicates: true,
+    preventDuplicates: false,
     showDuration: '300',
     hideDuration: '1000',
     timeOut: '3000',

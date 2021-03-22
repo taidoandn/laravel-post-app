@@ -57,17 +57,16 @@
                 updatePost: 'updatePost',
             }),
             async handleUpdate() {
-                this.updatePost(this.form)
-                    .then((res) => {
-                        this.errors = null;
-                        this.$emit('post-updated');
-                        toastr.success('Updated successful!', 'Success');
-                    })
-                    .catch((error) => {
-                        if (error.response.status === 422) {
-                            this.errors = error.response.data.errors;
-                        }
-                    });
+                try {
+                    await this.updatePost(this.form);
+                    this.errors = null;
+                    this.$emit('post-updated');
+                    toastr.success('Updated successful!', 'Success');
+                } catch (error) {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                }
             },
         },
     };

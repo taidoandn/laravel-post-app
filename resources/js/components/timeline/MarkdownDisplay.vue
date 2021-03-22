@@ -1,5 +1,5 @@
 <template>
-    <div v-html="markdownText" v-highlightjs></div>
+    <div class="code" v-html="markdownText" v-highlightjs></div>
 </template>
 
 <script>

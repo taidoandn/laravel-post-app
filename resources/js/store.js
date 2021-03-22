@@ -25,6 +25,7 @@ export default new Vuex.Store({
                 state.posts.splice(index, 1, post);
             }
         },
+
         REMOVE_POST(state, id) {
             state.posts = state.posts.filter((p) => p.id !== id);
         },
@@ -50,29 +51,21 @@ export default new Vuex.Store({
             commit('UPDATE_POST', post.data.data);
         },
 
-        createPost({ commit }, data) {
-            return axios.post('api/posts', data).then((res) => {
-                commit('PREPEND_POST', res.data.data);
+        async createPost({ commit }, data) {
+            let post = await axios.post('api/posts', data);
+            commit('PREPEND_POST', post.data.data);
+        },
+
+        async updatePost({ commit }, data) {
+            let post = await axios.put(`api/posts/${data.id}`, {
+                body: data.body,
             });
+            commit('UPDATE_POST', post.data.data);
         },
 
-        updatePost({ commit }, post) {
-            return axios
-                .put(`api/posts/${post.id}`, {
-                    body: post.body,
-                })
-                .then((res) => {
-                    commit('UPDATE_POST', res.data.data);
-                });
-        },
-
-        deletePost({ commit }, id) {
-            return axios
-                .delete(`api/posts/${id}`)
-                .then((res) => {
-                    commit('REMOVE_POST', id);
-                })
-                .catch((error) => console.log(error));
+        async deletePost({ commit }, id) {
+            let post = await axios.delete(`api/posts/${id}`);
+            commit('REMOVE_POST', id);
         },
 
         async likePost({ commit }, id) {

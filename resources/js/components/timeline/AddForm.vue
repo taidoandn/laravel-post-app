@@ -1,5 +1,5 @@
 <template>
-    <form action="#" @submit.prevent="submit">
+    <form action="#" class="post__form" @submit.prevent="submit">
         <div class="form-group">
             <md-editor :body="form.body" name="addForm">
                 <TextareaAutosize
@@ -47,21 +47,26 @@
                 createPost: 'createPost',
             }),
 
-            submit() {
-                this.createPost(this.form)
-                    .then(() => {
-                        this.errors = null;
-                        this.form.body = '';
-                        toastr.success('Submit successful!', 'Success!');
-                    })
-                    .catch((error) => {
-                        if (error.response.status === 422) {
-                            this.errors = error.response.data.errors;
-                        }
-                    });
+            async submit() {
+                try {
+                    await this.createPost(this.form);
+                    this.errors = null;
+                    this.form.body = '';
+                    toastr.success('Submit successful!', 'Success!');
+                } catch (error) {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                }
             },
         },
     };
 </script>
 
-<style></style>
+<style>
+    .post__form .code {
+        min-height: 100px;
+        max-height: 350px;
+        overflow-y: auto;
+    }
+</style>

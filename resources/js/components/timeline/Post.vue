@@ -42,8 +42,8 @@
 <script>
     import { mapActions, mapGetters } from 'vuex';
     import EditForm from './EditForm.vue';
-    import MarkdownDisplay from './MarkdownDisplay.vue';
     import PostLikes from './PostLikes.vue';
+    import MarkdownDisplay from './MarkdownDisplay.vue';
 
     export default {
         components: { EditForm, MarkdownDisplay, PostLikes },
@@ -67,10 +67,9 @@
                 this.tempBody = this.body;
                 this.editing = true;
             },
-            remove(id) {
-                this.deletePost(id).then(() => {
-                    toastr.success('Delete successful!', 'Success!');
-                });
+            async remove(id) {
+                await this.deletePost(id);
+                toastr.success('Delete successful!', 'Success!');
             },
             cancel() {
                 this.body = this.tempBody;
@@ -92,9 +91,8 @@
     .timeline__avatar {
         width: 60px;
     }
-    .card-body {
-        min-height: 145px;
-        max-height: 390px;
+    .timeline__post .code {
+        max-height: 350px;
         overflow-y: auto;
     }
 </style>
