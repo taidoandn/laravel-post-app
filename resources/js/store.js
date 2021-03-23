@@ -72,5 +72,10 @@ export default new Vuex.Store({
             let post = await axios.post(`api/posts/${id}/likes`);
             commit('UPDATE_POST', post.data.data);
         },
+
+        async unLikePost({ commit }, id) {
+            let post = await axios.delete(`api/posts/${id}/likes`);
+            commit('UPDATE_POST', post.data.data);
+        },
     },
 });

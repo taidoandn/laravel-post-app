@@ -26,4 +26,15 @@ class PostLikeController extends Controller
 
         return new PostResource($post->fresh());
     }
+
+    public function destroy(Post $post)
+    {
+        $this->authorize('unlike', $post);
+
+        $post->likes()->where('user_id', auth()->id())->delete();
+
+        broadcast(new PostLiked($post))->toOthers();
+
+        return new PostResource($post->fresh());
+    }
 }

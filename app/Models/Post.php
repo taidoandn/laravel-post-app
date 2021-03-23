@@ -8,21 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    const MAX_LIKES = 5;
-
     protected $fillable = [
         'body'
     ];
-
-    public function likesRemaining(User $user)
-    {
-        return self::MAX_LIKES - $this->likes->where('user_id', $user->id)->count();
-    }
-
-    public function maxLikesReached($user)
-    {
-        return $this->likesRemaining($user) <= 0;
-    }
 
     public function user()
     {
@@ -46,5 +34,10 @@ class Post extends Model
         )
             ->where('likeable_type', Post::class)
             ->groupBy('likes.user_id', 'likes.likeable_id');
+    }
+
+    public function isLikedBy(User $user)
+    {
+        return $this->likers->contains($user);
     }
 }

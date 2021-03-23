@@ -2306,6 +2306,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2375,15 +2376,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pluralize */ "./node_modules/pluralize/pluralize.js");
-/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(pluralize__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pluralize */ "./node_modules/pluralize/pluralize.js");
+/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(pluralize__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2415,8 +2434,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: {
-    canLike: function canLike() {
-      if (this.post.user.owner || this.post.user.likes_remaining <= 0) {
+    canLikeOrUnLike: function canLikeOrUnLike() {
+      if (this.post.user.owner) {
         return false;
       }
 
@@ -2424,12 +2443,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: _objectSpread(_objectSpread({
-    pluralize: pluralize__WEBPACK_IMPORTED_MODULE_0___default.a
-  }, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    likePost: 'likePost'
+    pluralize: pluralize__WEBPACK_IMPORTED_MODULE_1___default.a
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
+    likePost: 'likePost',
+    unLikePost: 'unLikePost'
   })), {}, {
-    like: function like() {
-      this.likePost(this.post.id);
+    toggleLike: function toggleLike() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!_this.post.user.liked) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return _this.unLikePost(_this.post.id);
+
+              case 3:
+                _context.next = 7;
+                break;
+
+              case 5:
+                _context.next = 7;
+                return _this.likePost(_this.post.id);
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   })
 });
@@ -96650,7 +96699,10 @@ var render = function() {
       { staticClass: "media-body" },
       [
         _c("div", { staticClass: "font-weight-bold" }, [
-          _vm._v("\n            " + _vm._s(_vm.post.author.name) + "\n        ")
+          _vm._v(
+            "\n            " + _vm._s(_vm.post.author.name) + "\n            "
+          ),
+          _c("small", [_vm._v(_vm._s(_vm.post.created_at))])
         ]),
         _vm._v(" "),
         !_vm.editing
@@ -96737,13 +96789,11 @@ var render = function() {
     _vm.post.likes_count
       ? _c(
           "span",
-          { staticClass: "text-secondary" },
+          { staticClass: "text-primary" },
           [
             _vm._v(
               "\n        " +
                 _vm._s(_vm.pluralize("like", _vm.post.likes_count, true)) +
-                " from\n        " +
-                _vm._s(_vm.pluralize("person", _vm.post.likers.length, true)) +
                 "\n        "
             ),
             _vm.post.user.liked
@@ -96754,26 +96804,37 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    _c("div", [
-      _vm.canLike
-        ? _c(
-            "button",
+    _vm.canLikeOrUnLike
+      ? _c("div", [
+          _c(
+            "a",
             {
-              staticClass: "btn btn-primary btn-sm",
+              staticClass: "btn btn-sm btn-primary",
+              class: {
+                "btn-primary": !_vm.post.user.liked,
+                "btn-danger": _vm.post.user.liked
+              },
+              attrs: { href: "#" },
               on: {
                 click: function($event) {
                   $event.preventDefault()
-                  return _vm.like($event)
+                  return _vm.toggleLike($event)
                 }
               }
             },
             [
-              _c("i", { staticClass: "fa fa-thumbs-up" }),
-              _vm._v(" Like\n        ")
+              _c("i", {
+                staticClass: "fa",
+                class: {
+                  "fa-thumbs-up": !_vm.post.user.liked,
+                  "fa-thumbs-down": _vm.post.user.liked
+                }
+              }),
+              _vm._v("\n            Like\n        ")
             ]
           )
-        : _vm._e()
-    ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -111461,6 +111522,29 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
             }
           }
         }, _callee7);
+      }))();
+    },
+    unLikePost: function unLikePost(_ref8, id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var commit, post;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                commit = _ref8.commit;
+                _context8.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("api/posts/".concat(id, "/likes"));
+
+              case 3:
+                post = _context8.sent;
+                commit('UPDATE_POST', post.data.data);
+
+              case 5:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
       }))();
     }
   }

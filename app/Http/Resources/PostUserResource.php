@@ -17,7 +17,6 @@ class PostUserResource extends JsonResource
         return [
             'owner' => optional(auth()->user())->id === $this->user_id,
             'liked' => $this->isLiked(),
-            'likes_remaining' => $this->countLikesRemaining()
         ];
     }
 
@@ -26,14 +25,6 @@ class PostUserResource extends JsonResource
         if (!$user = auth()->user()) {
             return false;
         }
-        return $this->likers->contains($user);
-    }
-
-    protected function countLikesRemaining()
-    {
-        if (!$user = auth()->user()) {
-            return false;
-        }
-        return $this->likesRemaining($user);
+        return $this->isLikedBy($user);
     }
 }

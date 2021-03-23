@@ -23,5 +23,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'api'], function () {
     Route::resource('posts', 'PostController');
-    Route::resource('posts/{post}/likes', 'PostLikeController');
+    Route::post('posts/{post}/likes', 'PostLikeController@store');
+    Route::delete('posts/{post}/likes', 'PostLikeController@destroy');
 });

@@ -8,6 +8,7 @@
         <div class="media-body">
             <div class="font-weight-bold">
                 {{ post.author.name }}
+                <small>{{ post.created_at }}</small>
             </div>
 
             <template v-if="!editing">

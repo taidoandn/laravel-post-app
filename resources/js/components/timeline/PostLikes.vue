@@ -1,20 +1,30 @@
 <template>
     <div>
-        <span class="text-secondary" v-if="post.likes_count">
-            {{ pluralize('like', post.likes_count, true) }} from
-            {{ pluralize('person', post.likers.length, true) }}
+        <span class="text-primary" v-if="post.likes_count">
+            {{ pluralize('like', post.likes_count, true) }}
             <template v-if="post.user.liked">
                 (including you)
             </template>
         </span>
-        <div>
-            <button
-                class="btn btn-primary btn-sm"
-                @click.prevent="like"
-                v-if="canLike"
+        <div v-if="canLikeOrUnLike">
+            <a
+                href="#"
+                class="btn btn-sm btn-primary"
+                :class="{
+                    'btn-primary': !post.user.liked,
+                    'btn-danger': post.user.liked,
+                }"
+                @click.prevent="toggleLike"
             >
-                <i class="fa fa-thumbs-up"></i> Like
-            </button>
+                <i
+                    class="fa"
+                    :class="{
+                        'fa-thumbs-up': !post.user.liked,
+                        'fa-thumbs-down': post.user.liked,
+                    }"
+                ></i>
+                Like
+            </a>
         </div>
     </div>
 </template>
@@ -31,11 +41,8 @@
         },
 
         computed: {
-            canLike() {
-                if (
-                    this.post.user.owner ||
-                    this.post.user.likes_remaining <= 0
-                ) {
+            canLikeOrUnLike() {
+                if (this.post.user.owner) {
                     return false;
                 }
                 return true;
@@ -47,10 +54,15 @@
 
             ...mapActions({
                 likePost: 'likePost',
+                unLikePost: 'unLikePost',
             }),
 
-            like() {
-                this.likePost(this.post.id);
+            async toggleLike() {
+                if (this.post.user.liked) {
+                    await this.unLikePost(this.post.id);
+                } else {
+                    await this.likePost(this.post.id);
+                }
             },
         },
     };

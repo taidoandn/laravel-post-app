@@ -22,7 +22,16 @@ class PostPolicy
 
     public function like(User $user, Post $post)
     {
-        if ($user->id === $post->user_id || $post->maxLikesReached($user)) {
+        if ($user->id === $post->user_id || $post->isLikedBy($user)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function unlike(User $user, Post $post)
+    {
+        if ($user->id === $post->user_id || !$post->isLikedBy($user)) {
             return false;
         }
 
