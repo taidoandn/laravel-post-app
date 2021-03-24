@@ -13,16 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('{any}', 'welcome')->where('any', '.*');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'api'], function () {
-    Route::resource('posts', 'PostController');
-    Route::post('posts/{post}/likes', 'PostLikeController@store');
-    Route::delete('posts/{post}/likes', 'PostLikeController@destroy');
-});
+// Route::group(['prefix' => 'api'], function () {
+//     Route::resource('posts', 'PostController');
+//     Route::post('posts/{post}/likes', 'PostLikeController@store');
+//     Route::delete('posts/{post}/likes', 'PostLikeController@destroy');
+// });
