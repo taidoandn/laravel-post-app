@@ -61,8 +61,9 @@
                             <label
                                 for="password"
                                 class="col-md-4 col-form-label text-md-right"
-                                >Password</label
                             >
+                                Password
+                            </label>
 
                             <div class="col-md-6">
                                 <input

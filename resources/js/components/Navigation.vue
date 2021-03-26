@@ -1,7 +1,8 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <router-link class="nav-brand" :to="{ name: 'home' }">
+            {{ user.name }}
+            <router-link class="navbar-brand" :to="{ name: 'home' }">
                 Laravel
             </router-link>
             <button
@@ -22,46 +23,78 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'login' }">
-                            Login
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link
-                            class="nav-link"
-                            :to="{ name: 'register' }"
-                        >
-                            Register
-                        </router-link>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                            id="navbarDropdown"
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            v-pre
-                        >
-                            King
-                        </a>
+                    <template v-if="!authenticated">
+                        <li class="nav-item">
+                            <router-link
+                                class="nav-link"
+                                :to="{ name: 'login' }"
+                            >
+                                Login
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link
+                                class="nav-link"
+                                :to="{ name: 'register' }"
+                            >
+                                Register
+                            </router-link>
+                        </li>
+                    </template>
 
-                        <div
-                            class="dropdown-menu dropdown-menu-right"
-                            aria-labelledby="navbarDropdown"
-                        >
-                            <a class="dropdown-item" href="#">
-                                Logout
+                    <template v-else>
+                        <li class="nav-item dropdown">
+                            <a
+                                id="navbarDropdown"
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                role="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                v-pre
+                            >
+                                {{ user.name }}
                             </a>
-                        </div>
-                    </li>
+
+                            <div
+                                class="dropdown-menu dropdown-menu-right"
+                                aria-labelledby="navbarDropdown"
+                            >
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    @click.prevent="handleLogout"
+                                >
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </template>
                 </ul>
             </div>
         </div>
     </nav>
 </template>
+
+<script>
+    import { mapActions, mapGetters } from 'vuex';
+    export default {
+        computed: {
+            ...mapGetters({
+                authenticated: 'auth/authenticated',
+                user: 'auth/user',
+            }),
+        },
+        methods: {
+            ...mapActions({
+                logout: 'auth/logout',
+            }),
+            handleLogout() {
+                this.logout();
+            },
+        },
+    };
+</script>
 
 <style scoped></style>

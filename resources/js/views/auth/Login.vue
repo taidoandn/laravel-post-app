@@ -5,7 +5,11 @@
                 <div class="card-header">Login</div>
 
                 <div class="card-body">
-                    <form method="POST" action="#">
+                    <form
+                        method="POST"
+                        action="#"
+                        @submit.prevent="handleSubmit"
+                    >
                         <div class="form-group row">
                             <label
                                 for="email"
@@ -20,15 +24,22 @@
                                     type="email"
                                     class="form-control"
                                     name="email"
-                                    value=""
+                                    v-model="form.email"
                                     required
                                     autocomplete="email"
                                     autofocus
+                                    :class="{
+                                        'is-invalid': errors && errors.email,
+                                    }"
                                 />
 
-                                <!-- <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span> -->
+                                <span
+                                    class="invalid-feedback"
+                                    role="alert"
+                                    v-if="errors && errors.email"
+                                >
+                                    <strong>{{ errors.email[0] }}</strong>
+                                </span>
                             </div>
                         </div>
 
@@ -36,8 +47,9 @@
                             <label
                                 for="password"
                                 class="col-md-4 col-form-label text-md-right"
-                                >Password</label
                             >
+                                Password
+                            </label>
 
                             <div class="col-md-6">
                                 <input
@@ -45,33 +57,21 @@
                                     type="password"
                                     class="form-control"
                                     name="password"
+                                    v-model="form.password"
                                     required
                                     autocomplete="current-password"
+                                    :class="{
+                                        'is-invalid': errors && errors.password,
+                                    }"
                                 />
 
-                                <!-- <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span> -->
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="remember"
-                                        id="remember"
-                                    />
-
-                                    <label
-                                        class="form-check-label"
-                                        for="remember"
-                                    >
-                                        Remember Me
-                                    </label>
-                                </div>
+                                <span
+                                    class="invalid-feedback"
+                                    role="alert"
+                                    v-if="errors && errors.password"
+                                >
+                                    <strong>{{ errors.password[0] }}</strong>
+                                </span>
                             </div>
                         </div>
 
@@ -88,3 +88,35 @@
         </div>
     </div>
 </template>
+
+<script>
+    import { mapActions } from 'vuex';
+    export default {
+        data() {
+            return {
+                form: {
+                    email: '',
+                    password: '',
+                },
+                errors: null,
+            };
+        },
+        methods: {
+            ...mapActions({
+                login: 'auth/login',
+            }),
+            handleSubmit() {
+                this.login(this.form)
+                    .then(() => {
+                        this.errors = null;
+                        this.$router.push('/home');
+                    })
+                    .catch((error) => {
+                        this.errors = error.response.data.errors;
+                    });
+            },
+        },
+    };
+</script>
+
+<style></style>

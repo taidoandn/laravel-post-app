@@ -1,8 +1,9 @@
 import Vue from 'vue';
+import store from '@/store';
 import Router from 'vue-router';
-import Login from './../views/auth/Login';
-import Register from './../views/auth/Register';
-import Home from './../views/home/index';
+import Login from '@/views/auth/Login';
+import Register from '@/views/auth/Register';
+import Home from '@/views/home/index';
 
 Vue.use(Router);
 
@@ -11,27 +12,22 @@ const routes = [
         path: '/login',
         name: 'login',
         component: Login,
-        meta: {
-            guest: true,
-            needsAuth: false,
-        },
     },
     {
         path: '/register',
         name: 'register',
         component: Register,
-        meta: {
-            guest: true,
-            needsAuth: false,
-        },
     },
     {
         path: '/home',
         name: 'home',
         component: Home,
-        meta: {
-            guest: false,
-            needsAuth: true,
+        beforeEnter: (to, from, next) => {
+            console.log(store.getters['auth/authenticated']);
+            if (!store.getters['auth/authenticated']) {
+                return next('/login');
+            }
+            next();
         },
     },
 ];

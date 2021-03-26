@@ -27,7 +27,11 @@ class AuthController extends Controller
     public function login(LoginFormRequest $request)
     {
         if (!$token = auth()->attempt($request->only('email', 'password'))) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['errors' => [
+                'email' => [
+                    0 => 'These credentials do not match our records.'
+                ]
+            ]], 401);
         }
 
         return $this->respondWithToken($token);
