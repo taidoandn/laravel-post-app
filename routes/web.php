@@ -13,14 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('{any}', 'welcome')->where('any', '.*');
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Route::group(['prefix' => 'api'], function () {
-//     Route::resource('posts', 'PostController');
-//     Route::post('posts/{post}/likes', 'PostLikeController@store');
-//     Route::delete('posts/{post}/likes', 'PostLikeController@destroy');
-// });
+Route::view('{any}', 'spa')->where('any', '.*');

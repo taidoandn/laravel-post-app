@@ -108,10 +108,10 @@
             handleSubmit() {
                 this.login(this.form)
                     .then(() => {
-                        this.errors = null;
-                        this.$router.push('/home');
+                        let redirectUrl = this.$route.query.redirect || '/home';
+                        this.$router.push(redirectUrl);
                     })
-                    .catch((error) => {
+                    .catch(error => {
                         this.errors = error.response.data.errors;
                     });
             },

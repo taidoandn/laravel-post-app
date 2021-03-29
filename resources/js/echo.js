@@ -1,15 +1,15 @@
 import store from './store';
 
 Echo.channel('posts')
-    .listen('PostCreated', (e) => {
+    .listen('PostCreated', e => {
         store.dispatch('getPost', e.post.id);
     })
-    .listen('PostUpdated', (e) => {
+    .listen('PostUpdated', e => {
         store.dispatch('refreshPost', e.post.id);
     })
-    .listen('PostDeleted', (e) => {
+    .listen('PostDeleted', e => {
         store.commit('REMOVE_POST', e.post.id);
     })
-    .listen('PostLiked', (e) => {
+    .listen('PostLiked', e => {
         store.dispatch('refreshPost', e.post.id);
     });

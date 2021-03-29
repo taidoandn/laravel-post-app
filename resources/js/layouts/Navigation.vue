@@ -1,7 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            {{ user.name }}
             <router-link class="navbar-brand" :to="{ name: 'home' }">
                 Laravel
             </router-link>
@@ -18,7 +17,18 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto"></ul>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <router-link class="nav-link" :to="{ name: 'about' }">
+                            About
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" :to="{ name: 'posts' }">
+                            Posts
+                        </router-link>
+                    </li>
+                </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -52,7 +62,6 @@
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="false"
-                                v-pre
                             >
                                 {{ user.name }}
                             </a>
@@ -61,13 +70,13 @@
                                 class="dropdown-menu dropdown-menu-right"
                                 aria-labelledby="navbarDropdown"
                             >
-                                <a
+                                <router-link
                                     class="dropdown-item"
                                     href="#"
-                                    @click.prevent="handleLogout"
+                                    :to="{ name: 'logout' }"
                                 >
                                     Logout
-                                </a>
+                                </router-link>
                             </div>
                         </li>
                     </template>
@@ -85,14 +94,6 @@
                 authenticated: 'auth/authenticated',
                 user: 'auth/user',
             }),
-        },
-        methods: {
-            ...mapActions({
-                logout: 'auth/logout',
-            }),
-            handleLogout() {
-                this.logout();
-            },
         },
     };
 </script>

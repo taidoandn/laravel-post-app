@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
 
@@ -28,10 +29,8 @@ class AuthController extends Controller
     {
         if (!$token = auth()->attempt($request->only('email', 'password'))) {
             return response()->json(['errors' => [
-                'email' => [
-                    0 => 'These credentials do not match our records.'
-                ]
-            ]], 401);
+                'email' => ['These credentials do not match our records.']
+            ]], 422);
         }
 
         return $this->respondWithToken($token);
@@ -70,16 +69,6 @@ class AuthController extends Controller
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
     }
 
     /**

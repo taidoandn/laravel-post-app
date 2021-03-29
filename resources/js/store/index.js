@@ -2,7 +2,7 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import axios from 'axios';
 
-import auth from './auth';
+import auth from './modules/auth';
 
 Vue.use(Vuex);
 
@@ -15,9 +15,7 @@ const store = new Vuex.Store({
     },
 
     getters: {
-        posts(state) {
-            return state.posts;
-        },
+        posts: state => state.posts,
     },
     mutations: {
         SET_POSTS(state, posts) {
@@ -25,14 +23,14 @@ const store = new Vuex.Store({
         },
 
         UPDATE_POST(state, post) {
-            let index = state.posts.findIndex((p) => p.id === post.id);
+            let index = state.posts.findIndex(p => p.id === post.id);
             if (index !== -1) {
                 state.posts.splice(index, 1, post);
             }
         },
 
         REMOVE_POST(state, id) {
-            state.posts = state.posts.filter((p) => p.id !== id);
+            state.posts = state.posts.filter(p => p.id !== id);
         },
 
         PREPEND_POST(state, post) {

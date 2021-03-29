@@ -40,7 +40,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function avatar()
     {
-        return 'https://www.gravatar.com/avatar/' . md5($this->email);
+        return 'https://www.gravatar.com/avatar/' . md5($this->email) . '?d=mm&s=60';
     }
 
     public function posts()
