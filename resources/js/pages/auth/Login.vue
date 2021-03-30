@@ -109,7 +109,7 @@
                 this.login(this.form)
                     .then(() => {
                         let redirectUrl = this.$route.query.redirect || '/home';
-                        this.$router.push(redirectUrl);
+                        this.$router.replace(redirectUrl);
                     })
                     .catch(error => {
                         this.errors = error.response.data.errors;

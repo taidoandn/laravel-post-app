@@ -1,5 +1,9 @@
 <template>
-    <timeline></timeline>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <timeline></timeline>
+        </div>
+    </div>
 </template>
 
 <script>

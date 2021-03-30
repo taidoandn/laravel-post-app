@@ -62,7 +62,7 @@
         },
         methods: {
             ...mapActions({
-                deletePost: 'deletePost',
+                deletePost: 'post/deletePost',
             }),
             edit() {
                 this.tempBody = this.body;

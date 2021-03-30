@@ -73,6 +73,13 @@
                                 <router-link
                                     class="dropdown-item"
                                     href="#"
+                                    :to="{ name: 'profile' }"
+                                >
+                                    Profile
+                                </router-link>
+                                <router-link
+                                    class="dropdown-item"
+                                    href="#"
                                     :to="{ name: 'logout' }"
                                 >
                                     Logout

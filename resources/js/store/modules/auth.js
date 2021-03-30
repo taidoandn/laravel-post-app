@@ -27,7 +27,7 @@ const mutations = {
 const actions = {
     async login({ dispatch }, data) {
         let response = await axios.post('api/auth/login', data);
-        dispatch('attempt', response.data.access_token);
+        return dispatch('attempt', response.data.access_token);
     },
 
     async register({ dispatch }, data) {
@@ -45,8 +45,8 @@ const actions = {
             let response = await axios.get('api/auth/me', {
                 headers: { Authorization: 'Bearer ' + token },
             });
-            localStorage.setItem('user', JSON.stringify(response.data));
-            commit('SET_USER', response.data);
+            localStorage.setItem('user', JSON.stringify(response.data.data));
+            commit('SET_USER', response.data.data);
         } catch (error) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');

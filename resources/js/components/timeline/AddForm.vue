@@ -44,7 +44,7 @@
         },
         methods: {
             ...mapActions({
-                createPost: 'createPost',
+                createPost: 'post/createPost',
             }),
 
             async submit() {

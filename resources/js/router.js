@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import Post from './pages/post/index';
 import Login from './pages/auth/Login';
 import Logout from './pages/auth/Logout';
+import Profile from './pages/auth/Profile';
 import Register from './pages/auth/Register';
 
 Vue.use(Router);
@@ -46,6 +47,14 @@ const routes = [
         path: '/about',
         name: 'about',
         component: About,
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: Profile,
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: '/posts',

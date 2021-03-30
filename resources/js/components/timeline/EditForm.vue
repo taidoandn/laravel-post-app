@@ -54,7 +54,7 @@
         },
         methods: {
             ...mapActions({
-                updatePost: 'updatePost',
+                updatePost: 'post/updatePost',
             }),
             async handleUpdate() {
                 try {

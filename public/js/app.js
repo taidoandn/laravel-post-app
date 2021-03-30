@@ -1979,7 +1979,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    createPost: 'createPost'
+    createPost: 'post/createPost'
   })), {}, {
     submit: function submit() {
       var _this = this;
@@ -2099,7 +2099,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    updatePost: 'updatePost'
+    updatePost: 'post/updatePost'
   })), {}, {
     handleUpdate: function handleUpdate() {
       var _this = this;
@@ -2330,7 +2330,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    deletePost: 'deletePost'
+    deletePost: 'post/deletePost'
   })), {}, {
     edit: function edit() {
       this.tempBody = this.body;
@@ -2415,15 +2415,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2434,6 +2425,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: {
+    icon_classes: function icon_classes() {
+      return ['fa', this.post.user.liked ? 'fa-thumbs-down' : 'fa-thumbs-up'];
+    },
+    classes: function classes() {
+      return ['btn', 'btn-sm', this.post.user.liked ? 'btn-danger' : 'btn-primary'];
+    },
     canLikeOrUnLike: function canLikeOrUnLike() {
       if (this.post.user.owner) {
         return false;
@@ -2445,8 +2442,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread({
     pluralize: pluralize__WEBPACK_IMPORTED_MODULE_1___default.a
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
-    likePost: 'likePost',
-    unLikePost: 'unLikePost'
+    likePost: 'post/likePost',
+    unLikePost: 'post/unLikePost'
   })), {}, {
     toggleLike: function toggleLike() {
       var _this = this;
@@ -2494,11 +2491,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _AddForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddForm.vue */ "./resources/js/components/timeline/AddForm.vue");
-/* harmony import */ var _Post_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Post.vue */ "./resources/js/components/timeline/Post.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Post_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Post.vue */ "./resources/js/components/timeline/Post.vue");
+/* harmony import */ var _AddForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddForm.vue */ "./resources/js/components/timeline/AddForm.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2520,14 +2517,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    AddForm: _AddForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Post: _Post_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    AddForm: _AddForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Post: _Post_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    posts: 'posts'
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    posts: 'post/posts'
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    getPosts: 'getPosts'
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    getPosts: 'post/getPosts'
   })),
   mounted: function mounted() {
     this.getPosts();
@@ -2583,6 +2580,13 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2858,7 +2862,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.login(this.form).then(function () {
         var redirectUrl = _this.$route.query.redirect || '/home';
 
-        _this.$router.push(redirectUrl);
+        _this.$router.replace(redirectUrl);
       })["catch"](function (error) {
         _this.errors = error.response.data.errors;
       });
@@ -3106,6 +3110,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_timeline_Timeline_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/timeline/Timeline.vue */ "./resources/js/components/timeline/Timeline.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -97443,10 +97451,7 @@ var render = function() {
             "a",
             {
               staticClass: "btn btn-sm btn-primary",
-              class: {
-                "btn-primary": !_vm.post.user.liked,
-                "btn-danger": _vm.post.user.liked
-              },
+              class: _vm.classes,
               attrs: { href: "#" },
               on: {
                 click: function($event) {
@@ -97456,14 +97461,12 @@ var render = function() {
               }
             },
             [
-              _c("i", {
-                staticClass: "fa",
-                class: {
-                  "fa-thumbs-up": !_vm.post.user.liked,
-                  "fa-thumbs-down": _vm.post.user.liked
-                }
-              }),
-              _vm._v("\n            Like\n        ")
+              _c("i", { class: _vm.icon_classes }),
+              _vm._v(
+                "\n            " +
+                  _vm._s(this.post.user.liked ? "Unlike" : "Like") +
+                  "\n        "
+              )
             ]
           )
         ])
@@ -97711,6 +97714,19 @@ var render = function() {
                                 "router-link",
                                 {
                                   staticClass: "dropdown-item",
+                                  attrs: { href: "#", to: { name: "profile" } }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Profile\n                            "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "dropdown-item",
                                   attrs: { href: "#", to: { name: "logout" } }
                                 },
                                 [
@@ -97785,7 +97801,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [_vm._v("About")]),
           _vm._v(" "),
@@ -97824,7 +97840,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [_vm._v("Home")]),
           _vm._v(" "),
@@ -98087,6 +98103,30 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/auth/Profile.vue?vue&type=template&id=ac14cdea&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/auth/Profile.vue?vue&type=template&id=ac14cdea& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("p", [_vm._v("Page profile")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -98402,7 +98442,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("timeline")
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-12" }, [_c("timeline")], 1)
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -116516,6 +116558,59 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/auth/Profile.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/auth/Profile.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Profile_vue_vue_type_template_id_ac14cdea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Profile.vue?vue&type=template&id=ac14cdea& */ "./resources/js/pages/auth/Profile.vue?vue&type=template&id=ac14cdea&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _Profile_vue_vue_type_template_id_ac14cdea___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Profile_vue_vue_type_template_id_ac14cdea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/auth/Profile.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/auth/Profile.vue?vue&type=template&id=ac14cdea&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/pages/auth/Profile.vue?vue&type=template&id=ac14cdea& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_template_id_ac14cdea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Profile.vue?vue&type=template&id=ac14cdea& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/auth/Profile.vue?vue&type=template&id=ac14cdea&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_template_id_ac14cdea___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_template_id_ac14cdea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/auth/Register.vue":
 /*!**********************************************!*\
   !*** ./resources/js/pages/auth/Register.vue ***!
@@ -116673,7 +116768,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_post_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/post/index */ "./resources/js/pages/post/index.vue");
 /* harmony import */ var _pages_auth_Login__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/auth/Login */ "./resources/js/pages/auth/Login.vue");
 /* harmony import */ var _pages_auth_Logout__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/auth/Logout */ "./resources/js/pages/auth/Logout.vue");
-/* harmony import */ var _pages_auth_Register__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/auth/Register */ "./resources/js/pages/auth/Register.vue");
+/* harmony import */ var _pages_auth_Profile__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/auth/Profile */ "./resources/js/pages/auth/Profile.vue");
+/* harmony import */ var _pages_auth_Register__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/auth/Register */ "./resources/js/pages/auth/Register.vue");
+
 
 
 
@@ -116695,7 +116792,7 @@ var routes = [{
 }, {
   path: '/register',
   name: 'register',
-  component: _pages_auth_Register__WEBPACK_IMPORTED_MODULE_9__["default"],
+  component: _pages_auth_Register__WEBPACK_IMPORTED_MODULE_10__["default"],
   meta: {
     requiresGuest: true
   }
@@ -116715,6 +116812,13 @@ var routes = [{
   path: '/about',
   name: 'about',
   component: _pages_About__WEBPACK_IMPORTED_MODULE_4__["default"]
+}, {
+  path: '/profile',
+  name: 'profile',
+  component: _pages_auth_Profile__WEBPACK_IMPORTED_MODULE_9__["default"],
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/posts',
   name: 'posts',
@@ -116777,246 +116881,20 @@ router.beforeEach(function (to, from, next) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/auth */ "./resources/js/store/modules/auth.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/auth */ "./resources/js/store/modules/auth.js");
+/* harmony import */ var _modules_post__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/post */ "./resources/js/store/modules/post.js");
 
 
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   modules: {
-    auth: _modules_auth__WEBPACK_IMPORTED_MODULE_4__["default"]
-  },
-  state: {
-    posts: []
-  },
-  getters: {
-    posts: function posts(state) {
-      return state.posts;
-    }
-  },
-  mutations: {
-    SET_POSTS: function SET_POSTS(state, posts) {
-      state.posts = posts;
-    },
-    UPDATE_POST: function UPDATE_POST(state, post) {
-      var index = state.posts.findIndex(function (p) {
-        return p.id === post.id;
-      });
-
-      if (index !== -1) {
-        state.posts.splice(index, 1, post);
-      }
-    },
-    REMOVE_POST: function REMOVE_POST(state, id) {
-      state.posts = state.posts.filter(function (p) {
-        return p.id !== id;
-      });
-    },
-    PREPEND_POST: function PREPEND_POST(state, post) {
-      state.posts.unshift(post);
-    }
-  },
-  actions: {
-    getPosts: function getPosts(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var commit, posts;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-                _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('api/posts');
-
-              case 3:
-                posts = _context.sent;
-                commit('SET_POSTS', posts.data.data);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getPost: function getPost(_ref2, id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var commit, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit;
-                _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("api/posts/".concat(id));
-
-              case 3:
-                post = _context2.sent;
-                commit('PREPEND_POST', post.data.data);
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    refreshPost: function refreshPost(_ref3, id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var commit, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                commit = _ref3.commit;
-                _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("api/posts/".concat(id));
-
-              case 3:
-                post = _context3.sent;
-                commit('UPDATE_POST', post.data.data);
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    createPost: function createPost(_ref4, data) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var commit, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref4.commit;
-                _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('api/posts', data);
-
-              case 3:
-                post = _context4.sent;
-                commit('PREPEND_POST', post.data.data);
-
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    updatePost: function updatePost(_ref5, data) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var commit, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref5.commit;
-                _context5.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.put("api/posts/".concat(data.id), {
-                  body: data.body
-                });
-
-              case 3:
-                post = _context5.sent;
-                commit('UPDATE_POST', post.data.data);
-
-              case 5:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
-    deletePost: function deletePost(_ref6, id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var commit, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                commit = _ref6.commit;
-                _context6.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("api/posts/".concat(id));
-
-              case 3:
-                post = _context6.sent;
-                commit('REMOVE_POST', id);
-
-              case 5:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
-    },
-    likePost: function likePost(_ref7, id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var commit, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                commit = _ref7.commit;
-                _context7.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("api/posts/".concat(id, "/likes"));
-
-              case 3:
-                post = _context7.sent;
-                commit('UPDATE_POST', post.data.data);
-
-              case 5:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }))();
-    },
-    unLikePost: function unLikePost(_ref8, id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        var commit, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                commit = _ref8.commit;
-                _context8.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("api/posts/".concat(id, "/likes"));
-
-              case 3:
-                post = _context8.sent;
-                commit('UPDATE_POST', post.data.data);
-
-              case 5:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }))();
-    }
+    auth: _modules_auth__WEBPACK_IMPORTED_MODULE_2__["default"],
+    post: _modules_post__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (store);
@@ -117084,7 +116962,7 @@ var actions = {
 
             case 3:
               response = _context.sent;
-              dispatch('attempt', response.data.access_token);
+              return _context.abrupt("return", dispatch('attempt', response.data.access_token));
 
             case 5:
             case "end":
@@ -117146,8 +117024,8 @@ var actions = {
 
             case 8:
               response = _context3.sent;
-              localStorage.setItem('user', JSON.stringify(response.data));
-              commit('SET_USER', response.data);
+              localStorage.setItem('user', JSON.stringify(response.data.data));
+              commit('SET_USER', response.data.data);
               _context3.next = 18;
               break;
 
@@ -117189,6 +117067,254 @@ var actions = {
           }
         }
       }, _callee4);
+    }))();
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/post.js":
+/*!********************************************!*\
+  !*** ./resources/js/store/modules/post.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var state = {
+  posts: []
+};
+var getters = {
+  posts: function posts(state) {
+    return state.posts;
+  }
+};
+var mutations = {
+  SET_POSTS: function SET_POSTS(state, posts) {
+    state.posts = posts;
+  },
+  UPDATE_POST: function UPDATE_POST(state, post) {
+    var index = state.posts.findIndex(function (p) {
+      return p.id === post.id;
+    });
+
+    if (index !== -1) {
+      state.posts.splice(index, 1, post);
+    }
+  },
+  REMOVE_POST: function REMOVE_POST(state, id) {
+    state.posts = state.posts.filter(function (p) {
+      return p.id !== id;
+    });
+  },
+  PREPEND_POST: function PREPEND_POST(state, post) {
+    state.posts.unshift(post);
+  }
+};
+var actions = {
+  getPosts: function getPosts(_ref) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var commit, posts;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/posts');
+
+            case 3:
+              posts = _context.sent;
+              commit('SET_POSTS', posts.data.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  getPost: function getPost(_ref2, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var commit, post;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/posts/".concat(id));
+
+            case 3:
+              post = _context2.sent;
+              commit('PREPEND_POST', post.data.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  refreshPost: function refreshPost(_ref3, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var commit, post;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/posts/".concat(id));
+
+            case 3:
+              post = _context3.sent;
+              commit('UPDATE_POST', post.data.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  createPost: function createPost(_ref4, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var commit, post;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('api/posts', data);
+
+            case 3:
+              post = _context4.sent;
+              commit('PREPEND_POST', post.data.data);
+
+            case 5:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  updatePost: function updatePost(_ref5, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var commit, post;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("api/posts/".concat(data.id), {
+                body: data.body
+              });
+
+            case 3:
+              post = _context5.sent;
+              commit('UPDATE_POST', post.data.data);
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  },
+  deletePost: function deletePost(_ref6, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      var commit, post;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context6.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/posts/".concat(id));
+
+            case 3:
+              post = _context6.sent;
+              commit('REMOVE_POST', id);
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+  likePost: function likePost(_ref7, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      var commit, post;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/posts/".concat(id, "/likes"));
+
+            case 3:
+              post = _context7.sent;
+              commit('UPDATE_POST', post.data.data);
+
+            case 5:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  },
+  unLikePost: function unLikePost(_ref8, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+      var commit, post;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              commit = _ref8.commit;
+              _context8.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/posts/".concat(id, "/likes"));
+
+            case 3:
+              post = _context8.sent;
+              commit('UPDATE_POST', post.data.data);
+
+            case 5:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
     }))();
   }
 };

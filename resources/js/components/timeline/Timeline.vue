@@ -8,22 +8,22 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import { mapGetters, mapActions } from 'vuex';
-    import AddForm from './AddForm.vue';
+    import axios from 'axios';
     import Post from './Post.vue';
+    import AddForm from './AddForm.vue';
 
     export default {
         components: { AddForm, Post },
         computed: {
             ...mapGetters({
-                posts: 'posts',
+                posts: 'post/posts',
             }),
         },
 
         methods: {
             ...mapActions({
-                getPosts: 'getPosts',
+                getPosts: 'post/getPosts',
             }),
         },
 
