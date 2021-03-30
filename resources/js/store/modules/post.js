@@ -1,4 +1,5 @@
 import axios from 'axios';
+import postApi from '@/api/postApi';
 
 const state = {
     posts: [],
@@ -31,44 +32,43 @@ const mutations = {
 
 const actions = {
     async getPosts({ commit }) {
-        let posts = await axios.get('api/posts');
+        let posts = await postApi.getAll();
         commit('SET_POSTS', posts.data.data);
     },
 
     async getPost({ commit }, id) {
-        let post = await axios.get(`api/posts/${id}`);
+        console.log(id);
+        let post = await postApi.get(id);
         commit('PREPEND_POST', post.data.data);
     },
 
     async refreshPost({ commit }, id) {
-        let post = await axios.get(`api/posts/${id}`);
+        let post = await postApi.get(id);
         commit('UPDATE_POST', post.data.data);
     },
 
     async createPost({ commit }, data) {
-        let post = await axios.post('api/posts', data);
+        let post = await postApi.create(data);
         commit('PREPEND_POST', post.data.data);
     },
 
     async updatePost({ commit }, data) {
-        let post = await axios.put(`api/posts/${data.id}`, {
-            body: data.body,
-        });
+        let post = await postApi.update(data);
         commit('UPDATE_POST', post.data.data);
     },
 
     async deletePost({ commit }, id) {
-        let post = await axios.delete(`api/posts/${id}`);
+        let post = await postApi.remove(id);
         commit('REMOVE_POST', id);
     },
 
     async likePost({ commit }, id) {
-        let post = await axios.post(`api/posts/${id}/likes`);
+        let post = await postApi.like(id);
         commit('UPDATE_POST', post.data.data);
     },
 
     async unLikePost({ commit }, id) {
-        let post = await axios.delete(`api/posts/${id}/likes`);
+        let post = await postApi.unlike(id);
         commit('UPDATE_POST', post.data.data);
     },
 };

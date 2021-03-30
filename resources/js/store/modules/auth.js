@@ -55,13 +55,9 @@ const actions = {
     },
 
     async logout({ commit }) {
-        try {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            commit('CLEAR_AUTH_DATA');
-        } catch (error) {
-            console.log(error);
-        }
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        commit('CLEAR_AUTH_DATA');
     },
 };
 

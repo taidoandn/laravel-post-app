@@ -50,7 +50,6 @@ axios.interceptors.request.use(
     },
     error => Promise.reject(error),
 );
-
 const app = new Vue({
     el: '#app',
     store,

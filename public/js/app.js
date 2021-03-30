@@ -115316,6 +115316,54 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/api/postApi.js":
+/*!*************************************!*\
+  !*** ./resources/js/api/postApi.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var postApi = {
+  getAll: function getAll(params) {
+    var url = 'api/posts';
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url, {
+      params: params
+    });
+  },
+  get: function get(id) {
+    var url = "api/posts/".concat(id);
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url);
+  },
+  create: function create(data) {
+    var url = 'api/posts';
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, data);
+  },
+  update: function update(data) {
+    var url = "api/posts/".concat(data.id);
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(url, data);
+  },
+  remove: function remove(id) {
+    var url = "api/posts/".concat(id);
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](url);
+  },
+  like: function like(id) {
+    var url = "api/posts/".concat(id, "/likes");
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url);
+  },
+  unlike: function unlike(id) {
+    var url = "api/posts/".concat(id, "/likes");
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](url);
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (postApi);
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -116062,13 +116110,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 
 Echo.channel('posts').listen('PostCreated', function (e) {
-  _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('getPost', e.post.id);
+  console.log(e);
+  _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('post/getPost', e.post.id);
 }).listen('PostUpdated', function (e) {
-  _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('refreshPost', e.post.id);
+  console.log(e);
+  _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('post/refreshPost', e.post.id);
 }).listen('PostDeleted', function (e) {
-  _store__WEBPACK_IMPORTED_MODULE_0__["default"].commit('REMOVE_POST', e.post.id);
+  console.log(e);
+  _store__WEBPACK_IMPORTED_MODULE_0__["default"].commit('post/REMOVE_POST', e.post.id);
 }).listen('PostLiked', function (e) {
-  _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('refreshPost', e.post.id);
+  console.log(e);
+  _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('post/refreshPost', e.post.id);
 });
 
 /***/ }),
@@ -117052,16 +117104,11 @@ var actions = {
           switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
+              commit('CLEAR_AUTH_DATA');
 
-              try {
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                commit('CLEAR_AUTH_DATA');
-              } catch (error) {
-                console.log(error);
-              }
-
-            case 2:
+            case 4:
             case "end":
               return _context4.stop();
           }
@@ -117093,11 +117140,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _api_postApi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/api/postApi */ "./resources/js/api/postApi.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 var state = {
@@ -117140,7 +117189,7 @@ var actions = {
             case 0:
               commit = _ref.commit;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/posts');
+              return _api_postApi__WEBPACK_IMPORTED_MODULE_2__["default"].getAll();
 
             case 3:
               posts = _context.sent;
@@ -117162,14 +117211,15 @@ var actions = {
           switch (_context2.prev = _context2.next) {
             case 0:
               commit = _ref2.commit;
-              _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/posts/".concat(id));
+              console.log(id);
+              _context2.next = 4;
+              return _api_postApi__WEBPACK_IMPORTED_MODULE_2__["default"].get(id);
 
-            case 3:
+            case 4:
               post = _context2.sent;
               commit('PREPEND_POST', post.data.data);
 
-            case 5:
+            case 6:
             case "end":
               return _context2.stop();
           }
@@ -117186,7 +117236,7 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/posts/".concat(id));
+              return _api_postApi__WEBPACK_IMPORTED_MODULE_2__["default"].get(id);
 
             case 3:
               post = _context3.sent;
@@ -117209,7 +117259,7 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('api/posts', data);
+              return _api_postApi__WEBPACK_IMPORTED_MODULE_2__["default"].create(data);
 
             case 3:
               post = _context4.sent;
@@ -117232,9 +117282,7 @@ var actions = {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("api/posts/".concat(data.id), {
-                body: data.body
-              });
+              return _api_postApi__WEBPACK_IMPORTED_MODULE_2__["default"].update(data);
 
             case 3:
               post = _context5.sent;
@@ -117257,7 +117305,7 @@ var actions = {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/posts/".concat(id));
+              return _api_postApi__WEBPACK_IMPORTED_MODULE_2__["default"].remove(id);
 
             case 3:
               post = _context6.sent;
@@ -117280,7 +117328,7 @@ var actions = {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/posts/".concat(id, "/likes"));
+              return _api_postApi__WEBPACK_IMPORTED_MODULE_2__["default"].like(id);
 
             case 3:
               post = _context7.sent;
@@ -117303,7 +117351,7 @@ var actions = {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/posts/".concat(id, "/likes"));
+              return _api_postApi__WEBPACK_IMPORTED_MODULE_2__["default"].unlike(id);
 
             case 3:
               post = _context8.sent;
