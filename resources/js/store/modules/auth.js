@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authApi from '@/api/authApi';
 
 const state = {
     token: localStorage.getItem('token') || null,
@@ -26,13 +27,13 @@ const mutations = {
 
 const actions = {
     async login({ dispatch }, data) {
-        let response = await axios.post('api/auth/login', data);
-        return dispatch('attempt', response.data.access_token);
+        let response = await authApi.login(data);
+        return dispatch('attempt', response.access_token);
     },
 
     async register({ dispatch }, data) {
-        let response = await axios.post('api/auth/register', data);
-        dispatch('attempt', response.data.access_token);
+        let response = await authApi.register(data);
+        dispatch('attempt', response.access_token);
     },
 
     async attempt({ commit }, token) {
@@ -42,11 +43,9 @@ const actions = {
         localStorage.setItem('token', token);
         commit('SET_TOKEN', token);
         try {
-            let response = await axios.get('api/auth/me', {
-                headers: { Authorization: 'Bearer ' + token },
-            });
-            localStorage.setItem('user', JSON.stringify(response.data.data));
-            commit('SET_USER', response.data.data);
+            let response = await authApi.me(token);
+            localStorage.setItem('user', JSON.stringify(response.data));
+            commit('SET_USER', response.data);
         } catch (error) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');

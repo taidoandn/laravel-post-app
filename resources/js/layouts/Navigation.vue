@@ -77,13 +77,13 @@
                                 >
                                     Profile
                                 </router-link>
-                                <router-link
+                                <a
                                     class="dropdown-item"
                                     href="#"
-                                    :to="{ name: 'logout' }"
+                                    @click.prevent="handeLogout"
                                 >
                                     Logout
-                                </router-link>
+                                </a>
                             </div>
                         </li>
                     </template>
@@ -101,6 +101,16 @@
                 authenticated: 'auth/authenticated',
                 user: 'auth/user',
             }),
+        },
+        methods: {
+            ...mapActions({
+                logout: 'auth/logout',
+            }),
+            handeLogout() {
+                this.logout().then(() => {
+                    this.$router.push({ name: 'login' });
+                });
+            },
         },
     };
 </script>

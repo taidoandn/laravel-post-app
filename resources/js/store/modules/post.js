@@ -33,28 +33,28 @@ const mutations = {
 const actions = {
     async getPosts({ commit }) {
         let posts = await postApi.getAll();
-        commit('SET_POSTS', posts.data.data);
+        commit('SET_POSTS', posts.data);
     },
 
     async getPost({ commit }, id) {
         console.log(id);
         let post = await postApi.get(id);
-        commit('PREPEND_POST', post.data.data);
+        commit('PREPEND_POST', post.data);
     },
 
     async refreshPost({ commit }, id) {
         let post = await postApi.get(id);
-        commit('UPDATE_POST', post.data.data);
+        commit('UPDATE_POST', post.data);
     },
 
     async createPost({ commit }, data) {
         let post = await postApi.create(data);
-        commit('PREPEND_POST', post.data.data);
+        commit('PREPEND_POST', post.data);
     },
 
     async updatePost({ commit }, data) {
         let post = await postApi.update(data);
-        commit('UPDATE_POST', post.data.data);
+        commit('UPDATE_POST', post.data);
     },
 
     async deletePost({ commit }, id) {
@@ -64,12 +64,12 @@ const actions = {
 
     async likePost({ commit }, id) {
         let post = await postApi.like(id);
-        commit('UPDATE_POST', post.data.data);
+        commit('UPDATE_POST', post.data);
     },
 
     async unLikePost({ commit }, id) {
         let post = await postApi.unlike(id);
-        commit('UPDATE_POST', post.data.data);
+        commit('UPDATE_POST', post.data);
     },
 };
 

@@ -6,7 +6,6 @@ import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Post from './pages/post/index';
 import Login from './pages/auth/Login';
-import Logout from './pages/auth/Logout';
 import Profile from './pages/auth/Profile';
 import Register from './pages/auth/Register';
 
@@ -27,14 +26,6 @@ const routes = [
         component: Register,
         meta: {
             requiresGuest: true,
-        },
-    },
-    {
-        path: '/logout',
-        name: 'logout',
-        component: Logout,
-        meta: {
-            requiresAuth: true,
         },
     },
     {

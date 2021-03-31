@@ -1,39 +1,39 @@
-import axios from 'axios';
+import axiosClient from './axiosClient';
 
 const postApi = {
     getAll(params) {
-        const url = 'api/posts';
-        return axios.get(url, { params });
+        const url = '/posts';
+        return axiosClient.get(url, { params });
     },
 
     get(id) {
-        const url = `api/posts/${id}`;
-        return axios.get(url);
+        const url = `/posts/${id}`;
+        return axiosClient.get(url);
     },
 
     create(data) {
-        const url = 'api/posts';
-        return axios.post(url, data);
+        const url = '/posts';
+        return axiosClient.post(url, data);
     },
 
     update(data) {
-        const url = `api/posts/${data.id}`;
-        return axios.put(url, data);
+        const url = `/posts/${data.id}`;
+        return axiosClient.put(url, data);
     },
 
     remove(id) {
-        const url = `api/posts/${id}`;
-        return axios.delete(url);
+        const url = `/posts/${id}`;
+        return axiosClient.delete(url);
     },
 
     like(id) {
-        const url = `api/posts/${id}/likes`;
-        return axios.post(url);
+        const url = `/posts/${id}/likes`;
+        return axiosClient.post(url);
     },
 
     unlike(id) {
-        const url = `api/posts/${id}/likes`;
-        return axios.delete(url);
+        const url = `/posts/${id}/likes`;
+        return axiosClient.delete(url);
     },
 };
 
