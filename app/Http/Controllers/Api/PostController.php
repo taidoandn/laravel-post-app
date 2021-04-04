@@ -53,6 +53,8 @@ class PostController extends Controller
 
     public function update(PostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $post->update($request->only('body'));
 
         broadcast(new PostUpdated($post))->toOthers();
@@ -62,6 +64,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $post->delete();
 
         broadcast(new PostDeleted($post))->toOthers();
