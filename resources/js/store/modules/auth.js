@@ -37,11 +37,11 @@ const actions = {
     },
 
     async attempt({ commit }, token) {
-        if (!token) {
-            return;
-        }
+        if (!token) return;
+
         localStorage.setItem('token', token);
         commit('SET_TOKEN', token);
+
         try {
             let response = await authApi.me(token);
             localStorage.setItem('user', JSON.stringify(response.data));
@@ -57,6 +57,11 @@ const actions = {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         commit('CLEAR_AUTH_DATA');
+    },
+
+    refreshToken({ commit }, token) {
+        localStorage.setItem('token', token);
+        commit('SET_TOKEN', token);
     },
 };
 

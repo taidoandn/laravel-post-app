@@ -115340,33 +115340,42 @@ var axiosClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   }
 });
 axiosClient.interceptors.response.use(function (response) {
-  return response.data;
+  if (response && response.data) {
+    return response.data;
+  }
+
+  return response;
 }, /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(error) {
-    var originalRequest;
+    var config, newToken;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            originalRequest = error.config;
+            config = error.config;
 
-            if (!(error.response.status === 401)) {
-              _context.next = 5;
+            if (!(error.response.status === 401 && !error.config._isRetry)) {
+              _context.next = 9;
               break;
             }
 
-            _context.next = 4;
+            error.config._isRetry = true;
+            newToken = error.response.data.access_token;
+            _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('auth/refreshToken', newToken);
+            config.headers['Authorization'] = "Bearer ".concat(newToken);
+            return _context.abrupt("return", axiosClient(config));
+
+          case 9:
+            _context.next = 11;
             return _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('auth/logout');
 
-          case 4:
+          case 11:
             _router__WEBPACK_IMPORTED_MODULE_3__["default"].push({
               name: 'login'
             });
-
-          case 5:
             return _context.abrupt("return", Promise.reject(error));
 
-          case 6:
+          case 13:
           case "end":
             return _context.stop();
         }
@@ -115379,9 +115388,10 @@ axiosClient.interceptors.response.use(function (response) {
   };
 }());
 axiosClient.interceptors.request.use(function (config) {
-  var token = localStorage.getItem('token');
+  var token = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/token'];
+  var authenticated = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/authenticated'];
 
-  if (token) {
+  if (token && authenticated) {
     config.headers.common['Authorization'] = "Bearer ".concat(token);
   }
 
@@ -117050,6 +117060,11 @@ var actions = {
         }
       }, _callee4);
     }))();
+  },
+  refreshToken: function refreshToken(_ref5, token) {
+    var commit = _ref5.commit;
+    localStorage.setItem('token', token);
+    commit('SET_TOKEN', token);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

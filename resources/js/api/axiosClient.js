@@ -11,21 +11,37 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.response.use(
-    response => response.data,
+    response => {
+        if (response && response.data) {
+            return response.data;
+        }
+        return response;
+    },
     async error => {
-        const originalRequest = error.config;
-        if (error.response.status === 401) {
+        const config = error.config;
+        if (error.response.status === 401 && !error.config._isRetry) {
+            error.config._isRetry = true;
+
+            const newToken = error.response.data.access_token;
+            store.dispatch('auth/refreshToken', newToken);
+
+            config.headers['Authorization'] = `Bearer ${newToken}`;
+
+            return axiosClient(config);
+        } else {
             await store.dispatch('auth/logout');
             router.push({ name: 'login' });
+            return Promise.reject(error);
         }
-        return Promise.reject(error);
     },
 );
 
 axiosClient.interceptors.request.use(
     config => {
-        const token = localStorage.getItem('token');
-        if (token) {
+        const token = store.getters['auth/token'];
+        const authenticated = store.getters['auth/authenticated'];
+
+        if (token && authenticated) {
             config.headers.common['Authorization'] = `Bearer ${token}`;
         }
         config.headers['X-Socket-ID'] = window.Echo.socketId();
