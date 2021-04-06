@@ -28,11 +28,12 @@ axiosClient.interceptors.response.use(
             config.headers['Authorization'] = `Bearer ${newToken}`;
 
             return axiosClient(config);
-        } else {
+        }
+        if (error.config._isRetry) {
             await store.dispatch('auth/logout');
             router.push({ name: 'login' });
-            return Promise.reject(error);
         }
+        return Promise.reject(error);
     },
 );
 
