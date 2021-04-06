@@ -115354,25 +115354,28 @@ axiosClient.interceptors.response.use(function (response) {
           case 0:
             config = error.config;
 
-            if (!(error.response.status === 401)) {
-              _context.next = 6;
+            if (!(error.response.status === 401 && !error.config._isRetry)) {
+              _context.next = 9;
               break;
             }
 
+            error.config._isRetry = true;
             newToken = error.response.data.access_token;
             _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('auth/refreshToken', newToken);
             config.headers['Authorization'] = "Bearer ".concat(newToken);
-            return _context.abrupt("return", axiosClient(config)["catch"](function () {
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('auth/logout');
-              _router__WEBPACK_IMPORTED_MODULE_3__["default"].push({
-                name: 'login'
-              });
-            }));
+            return _context.abrupt("return", axiosClient(config));
 
-          case 6:
+          case 9:
+            _context.next = 11;
+            return _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('auth/logout');
+
+          case 11:
+            _router__WEBPACK_IMPORTED_MODULE_3__["default"].push({
+              name: 'login'
+            });
             return _context.abrupt("return", Promise.reject(error));
 
-          case 7:
+          case 13:
           case "end":
             return _context.stop();
         }
