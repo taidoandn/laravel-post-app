@@ -19,20 +19,18 @@ axiosClient.interceptors.response.use(
     },
     async error => {
         const config = error.config;
-        if (error.response.status === 401 && !error.config._isRetry) {
-            error.config._isRetry = true;
-
+        if (error.response.status === 401) {
             const newToken = error.response.data.access_token;
             store.dispatch('auth/refreshToken', newToken);
 
             config.headers['Authorization'] = `Bearer ${newToken}`;
 
-            return axiosClient(config);
-        } else {
-            await store.dispatch('auth/logout');
-            router.push({ name: 'login' });
-            return Promise.reject(error);
+            return axiosClient(config).catch(() => {
+                store.dispatch('auth/logout');
+                router.push({ name: 'login' });
+            });
         }
+        return Promise.reject(error);
     },
 );
 
