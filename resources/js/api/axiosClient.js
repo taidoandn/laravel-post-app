@@ -3,7 +3,7 @@ import store from '@/store';
 import router from '@/router';
 
 const axiosClient = axios.create({
-    baseURL: 'http://localhost/api',
+    baseURL: '/api',
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -41,7 +41,7 @@ axiosClient.interceptors.request.use(
         const token = store.getters['auth/token'];
         const authenticated = store.getters['auth/authenticated'];
 
-        if (token && authenticated) {
+        if (authenticated) {
             config.headers.common['Authorization'] = `Bearer ${token}`;
         }
         config.headers['X-Socket-ID'] = window.Echo.socketId();

@@ -115333,7 +115333,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var axiosClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
-  baseURL: 'http://localhost/api',
+  baseURL: '/api',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json'
@@ -115391,7 +115391,7 @@ axiosClient.interceptors.request.use(function (config) {
   var token = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/token'];
   var authenticated = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/authenticated'];
 
-  if (token && authenticated) {
+  if (authenticated) {
     config.headers.common['Authorization'] = "Bearer ".concat(token);
   }
 
