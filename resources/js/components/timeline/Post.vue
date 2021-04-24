@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex';
+    import { mapActions } from 'vuex';
     import EditForm from './EditForm.vue';
     import PostLikes from './PostLikes.vue';
     import MarkdownDisplay from './MarkdownDisplay.vue';

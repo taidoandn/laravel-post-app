@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex';
+    import { mapActions } from 'vuex';
     import MDEditor from './MDEditor.vue';
 
     export default {

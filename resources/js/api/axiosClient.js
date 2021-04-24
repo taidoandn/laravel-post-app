@@ -29,7 +29,7 @@ axiosClient.interceptors.response.use(
 
             return axiosClient(config);
         }
-        if (error.config._isRetry) {
+        if (error.response.status === 401 && error.config._isRetry) {
             await store.dispatch('auth/logout');
             router.push({ name: 'login' });
         }
