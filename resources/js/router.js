@@ -68,6 +68,19 @@ const router = new Router({
     mode: 'history',
 });
 
+router.beforeResolve((to, from, next) => {
+    // If this isn't an initial page load.
+    if (to.name) {
+        NProgress.start();
+    }
+    next();
+});
+
+router.afterEach((to, from) => {
+    // Complete the animation of the route progress bar.
+    NProgress.done();
+});
+
 router.beforeEach((to, from, next) => {
     const isAuthticated = store.getters['auth/authenticated'];
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);

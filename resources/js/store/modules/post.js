@@ -10,10 +10,6 @@ const getters = {
 };
 
 const mutations = {
-    SET_POSTS(state, posts) {
-        state.posts = posts;
-    },
-
     UPDATE_POST(state, post) {
         let index = state.posts.findIndex(p => p.id === post.id);
         if (index !== -1) {
@@ -26,18 +22,27 @@ const mutations = {
     },
 
     PREPEND_POST(state, post) {
-        state.posts.unshift(post);
+        state.posts = [post, ...state.posts];
+    },
+
+    PUSH_POSTS(state, posts) {
+        let filteredPosts = [...posts].filter(post => {
+            return !state.posts.map(p => p.id).includes(post.id);
+        });
+
+        state.posts = [...state.posts, ...filteredPosts];
     },
 };
 
 const actions = {
-    async getPosts({ commit }) {
-        let posts = await postApi.getAll();
-        commit('SET_POSTS', posts.data);
+    async getPosts({ commit, state }, page) {
+        let response = await postApi.getAll({ page });
+        commit('PUSH_POSTS', response.data);
+
+        return response;
     },
 
     async getPost({ commit }, id) {
-        console.log(id);
         let post = await postApi.get(id);
         commit('PREPEND_POST', post.data);
     },

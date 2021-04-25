@@ -1,3 +1,4 @@
+import app from '@/app';
 import axios from 'axios';
 import store from '@/store';
 import router from '@/router';
@@ -10,8 +11,29 @@ const axiosClient = axios.create({
     },
 });
 
+axiosClient.interceptors.request.use(
+    config => {
+        NProgress.start();
+
+        const token = store.getters['auth/token'];
+        const authenticated = store.getters['auth/authenticated'];
+
+        if (authenticated) {
+            config.headers.common['Authorization'] = `Bearer ${token}`;
+        }
+        config.headers['X-Socket-ID'] = window.Echo.socketId();
+        return config;
+    },
+    error => {
+        NProgress.done();
+        Promise.reject(error);
+    },
+);
+
 axiosClient.interceptors.response.use(
     response => {
+        NProgress.done();
+
         if (response && response.data) {
             return response.data;
         }
@@ -33,22 +55,10 @@ axiosClient.interceptors.response.use(
             await store.dispatch('auth/logout');
             router.push({ name: 'login' });
         }
+
+        NProgress.done();
         return Promise.reject(error);
     },
-);
-
-axiosClient.interceptors.request.use(
-    config => {
-        const token = store.getters['auth/token'];
-        const authenticated = store.getters['auth/authenticated'];
-
-        if (authenticated) {
-            config.headers.common['Authorization'] = `Bearer ${token}`;
-        }
-        config.headers['X-Socket-ID'] = window.Echo.socketId();
-        return config;
-    },
-    error => Promise.reject(error),
 );
 
 export default axiosClient;

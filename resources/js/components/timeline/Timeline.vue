@@ -3,18 +3,27 @@
         <add-form />
         <div class="timeline__posts">
             <post v-for="post in posts" :key="post.id" :post="post" />
+            <div
+                v-if="posts.length"
+                v-observe-visibility="visibilityChanged"
+            ></div>
         </div>
     </div>
 </template>
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
-    import axios from 'axios';
     import Post from './Post.vue';
     import AddForm from './AddForm.vue';
 
     export default {
         components: { AddForm, Post },
+        data() {
+            return {
+                page: 1,
+                lastPage: 1,
+            };
+        },
         computed: {
             ...mapGetters({
                 posts: 'post/posts',
@@ -25,10 +34,29 @@
             ...mapActions({
                 getPosts: 'post/getPosts',
             }),
+
+            loadPosts() {
+                this.getPosts(this.page).then(res => {
+                    this.lastPage = res.meta.last_page;
+                });
+            },
+
+            visibilityChanged(isVisible) {
+                if (!isVisible) {
+                    return;
+                }
+
+                if (this.page == this.lastPage) {
+                    return;
+                }
+
+                this.page++;
+                this.loadPosts();
+            },
         },
 
         mounted() {
-            this.getPosts();
+            this.loadPosts();
         },
     };
 </script>

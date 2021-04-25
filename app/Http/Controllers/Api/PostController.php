@@ -20,7 +20,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::with('user','likes','likers')
+                ->latest()
+                ->paginate(5);
 
         return PostResource::collection($posts);
     }

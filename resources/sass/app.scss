@@ -14,3 +14,9 @@
 @import "~@fortawesome/fontawesome-free/css/solid.min.css";
 
 @import "~toastr/toastr";
+
+@import "~nprogress/nprogress.css";
+
+#nprogress .bar {
+    height: 5px;
+}

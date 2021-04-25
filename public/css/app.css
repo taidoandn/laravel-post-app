@@ -10,7 +10,78 @@
  * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
-@font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:900;font-display:block;src:url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?00bb62bc33034479d5e82a0fd1c5efe3);src:url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?00bb62bc33034479d5e82a0fd1c5efe3?#iefix) format("embedded-opentype"),url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?9ae050d1876ac1763eb6afe4264e6d5a) format("woff2"),url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?4bfbf7eb4b19d9ff9293eb177b6d0070) format("woff"),url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?260d033f79f75d670fd09d8cf7c8bf8d) format("truetype"),url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?2306f642b31b774ba1d8b6b784539e19#fontawesome) format("svg")}.fa,.fas{font-family:"Font Awesome 5 Free";font-weight:900}@charset "UTF-8";
+@font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:900;font-display:block;src:url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?00bb62bc33034479d5e82a0fd1c5efe3);src:url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?00bb62bc33034479d5e82a0fd1c5efe3?#iefix) format("embedded-opentype"),url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?9ae050d1876ac1763eb6afe4264e6d5a) format("woff2"),url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?4bfbf7eb4b19d9ff9293eb177b6d0070) format("woff"),url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?260d033f79f75d670fd09d8cf7c8bf8d) format("truetype"),url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?2306f642b31b774ba1d8b6b784539e19#fontawesome) format("svg")}.fa,.fas{font-family:"Font Awesome 5 Free";font-weight:900}/* Make clicks pass-through */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: #29d;
+
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+  opacity: 1.0;
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: 15px;
+  right: 15px;
+}
+
+#nprogress .spinner-icon {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+
+  border: solid 2px transparent;
+  border-top-color: #29d;
+  border-left-color: #29d;
+  border-radius: 50%;
+
+  -webkit-animation: nprogress-spinner 400ms linear infinite;
+          animation: nprogress-spinner 400ms linear infinite;
+}
+
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+  position: absolute;
+}
+
+@-webkit-keyframes nprogress-spinner {
+  0%   { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes nprogress-spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@charset "UTF-8";
 
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
@@ -11273,5 +11344,9 @@ button.toast-close-button {
     padding: 15px 15px 15px 50px;
     width: 25em;
   }
+}
+
+#nprogress .bar {
+  height: 5px;
 }
 

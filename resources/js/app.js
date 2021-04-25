@@ -1,8 +1,9 @@
-import router from './router';
 import store from './store';
+import router from './router';
+import App from './layouts/App';
 import highlight from './directives/highlight';
 import TextareaAutosize from 'vue-textarea-autosize';
-import App from './layouts/App';
+import VueObserveVisibility from 'vue-observe-visibility';
 
 require('./bootstrap');
 require('./echo');
@@ -18,7 +19,10 @@ toastr.options = {
     timeOut: '3000',
 };
 
+window.NProgress = require('nprogress');
+
 Vue.use(TextareaAutosize);
+Vue.use(VueObserveVisibility);
 Vue.directive('highlightjs', highlight);
 
 // const files = require.context('./', true, /\.vue$/i)
