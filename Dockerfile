@@ -31,6 +31,10 @@ COPY . .
 
 RUN chown -R www:www .
 
+RUN composer install --ignore-platform-reqs
+
+RUN npm install
+
 # Change current user to www
 USER www
 
