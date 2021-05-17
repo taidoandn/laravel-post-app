@@ -8,7 +8,7 @@
         <div class="media-body">
             <div class="font-weight-bold">
                 {{ post.author.name }}
-                <small>{{ post.created_at }}</small>
+                <from-now :timestamp="post.created_at"></from-now>
             </div>
 
             <template v-if="!editing">
@@ -45,9 +45,10 @@
     import EditForm from './EditForm.vue';
     import PostLikes from './PostLikes.vue';
     import MarkdownDisplay from './MarkdownDisplay.vue';
+    import FromNow from '../FromNow.vue';
 
     export default {
-        components: { EditForm, MarkdownDisplay, PostLikes },
+        components: { EditForm, MarkdownDisplay, PostLikes, FromNow },
         props: {
             post: {
                 type: Object,

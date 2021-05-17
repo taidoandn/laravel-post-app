@@ -20,7 +20,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'body' => $this->body,
             'likes_count' => $this->likes->count(),
-            'created_at' => $this->created_at->diffForHumans(),
+            'created_at' => $this->created_at,
             'author' => new UserResource($this->user),
             'likers' => UserResource::collection($this->likers),
             'user' => new PostUserResource($this)
