@@ -7,7 +7,7 @@ WORKDIR /var/www/html
 
 # Install dependencies
 RUN apt-get update && apt-get install -y vim curl git zip unzip supervisor \
-    && curl -sL https://deb.nodesource.com/setup_15.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get -y install nodejs \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -30,10 +30,6 @@ RUN groupadd -g 1000 www && useradd -u 1000 -ms /bin/bash -g www www
 COPY . .
 
 RUN chown -R www:www .
-
-RUN composer install --ignore-platform-reqs
-
-RUN npm install
 
 # Change current user to www
 USER www
