@@ -36,6 +36,7 @@
         "vue-observe-visibility": "^1.0.0",
         "vue-router": "^3.5.1",
         "vue-textarea-autosize": "^1.1.1",
-        "vuex": "^3.6.2"
+        "vuex": "^3.6.2",
+        "vuex-persistedstate": "^4.0.0-beta.3"
     }
 }
