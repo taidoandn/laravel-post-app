@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +24,6 @@ Route::group(['middleware' => ['jwt-auth'], 'namespace' => 'Api'], function () {
     Route::resource('posts', 'PostController');
     Route::post('posts/{post}/likes', 'PostLikeController@store');
     Route::delete('posts/{post}/likes', 'PostLikeController@destroy');
+
+    Route::put('/auth/profile', 'ProfileController@update');
 });

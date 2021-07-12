@@ -2799,6 +2799,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -3000,6 +3004,83 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layouts_Sidebar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layouts/Sidebar */ "./resources/js/layouts/Sidebar.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3053,17 +3134,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Sidebar: _layouts_Sidebar__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    user: 'auth/user'
+  })),
   data: function data() {
     return {
       form: {
         name: '',
-        email: ''
-      }
+        email: '',
+        password: '',
+        password_confirmation: ''
+      },
+      errors: null
     };
+  },
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
+    updateProfile: 'auth/updateProfile'
+  })), {}, {
+    handleSubmit: function handleSubmit() {
+      var _this = this;
+
+      this.updateProfile(this.form).then(function () {
+        toastr.success('Updated successful !', 'Success!');
+        _this.errors = null;
+        _this.form.password = '';
+        _this.form.password_confirmation = '';
+      })["catch"](function (error) {
+        _this.errors = error.response.data.errors;
+      });
+    }
+  }),
+  mounted: function mounted() {
+    if (this.user) {
+      var _this$user = this.user,
+          name = _this$user.name,
+          email = _this$user.email;
+      this.form.name = name;
+      this.form.email = email;
+    }
   }
 });
 
@@ -3269,7 +3382,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_timeline_Timeline_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/timeline/Timeline.vue */ "./resources/js/components/timeline/Timeline.vue");
+/* harmony import */ var _Components_timeline_Timeline_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Components/timeline/Timeline.vue */ "./resources/js/components/timeline/Timeline.vue");
 //
 //
 //
@@ -3281,7 +3394,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Timeline: _components_timeline_Timeline_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Timeline: _Components_timeline_Timeline_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -98513,26 +98626,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("ul", { staticClass: "list-group" }, [
-        _c("a", { staticClass: "list-group-item", attrs: { href: "#" } }, [
-          _vm._v("Account")
-        ]),
+  return _c("div", { staticClass: "col-md-3" }, [
+    _c(
+      "ul",
+      { staticClass: "list-group" },
+      [
+        _c(
+          "router-link",
+          {
+            staticClass: "list-group-item",
+            attrs: { to: { name: "profile" } }
+          },
+          [_vm._v("\n            Profile\n        ")]
+        ),
         _vm._v(" "),
-        _c("a", { staticClass: "list-group-item", attrs: { href: "#" } }, [
-          _vm._v("Change password")
-        ])
-      ])
-    ])
-  }
-]
+        _c(
+          "router-link",
+          { staticClass: "list-group-item", attrs: { to: { name: "home" } } },
+          [_vm._v("\n            Logout\n        ")]
+        )
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -98866,83 +98984,246 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "row justify-content-center" },
-    [_c("sidebar"), _vm._v(" "), _vm._m(0)],
+    [
+      _c("sidebar"),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-9" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [_vm._v("Update profile")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "form",
+              {
+                attrs: { action: "#", method: "POST" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.handleSubmit($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-form-label text-md-right",
+                      attrs: { for: "coupon" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Name:\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.name,
+                        expression: "form.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.name
+                    },
+                    attrs: { type: "text", name: "name", id: "name" },
+                    domProps: { value: _vm.form.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "name", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.name
+                    ? _c(
+                        "span",
+                        {
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
+                        },
+                        [_c("strong", [_vm._v(_vm._s(_vm.errors.name[0]))])]
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-form-label text-md-right",
+                      attrs: { for: "coupon" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Email:\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.email,
+                        expression: "form.email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.email
+                    },
+                    attrs: { type: "text", name: "email", id: "email" },
+                    domProps: { value: _vm.form.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "email", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.email
+                    ? _c(
+                        "span",
+                        {
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
+                        },
+                        [_c("strong", [_vm._v(_vm._s(_vm.errors.email[0]))])]
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-form-label",
+                      attrs: { for: "password" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Password:\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.password,
+                        expression: "form.password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.password
+                    },
+                    attrs: { id: "password", type: "password" },
+                    domProps: { value: _vm.form.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "password", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.password
+                    ? _c(
+                        "span",
+                        {
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
+                        },
+                        [_c("strong", [_vm._v(_vm._s(_vm.errors.password[0]))])]
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-form-label",
+                      attrs: { for: "password-confirm" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Confirm Password:\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.password_confirmation,
+                        expression: "form.password_confirmation"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation
+                    },
+                    attrs: { id: "password-confirm", type: "password" },
+                    domProps: { value: _vm.form.password_confirmation },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.form,
+                          "password_confirmation",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary float-right",
+                    attrs: { type: "submit" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Update\n                    "
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-9" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Update profile")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "form",
-            { attrs: { action: "#", method: "POST", id: "card-form" } },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "col-form-label text-md-right",
-                    attrs: { for: "coupon" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Name:\n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "name", id: "name" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "col-form-label text-md-right",
-                    attrs: { for: "coupon" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Email:\n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "email", id: "email" }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary float-right",
-                  attrs: { type: "submit" }
-                },
-                [
-                  _vm._v(
-                    "\n                        Update\n                    "
-                  )
-                ]
-              )
-            ]
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -115105,6 +115386,21 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var r=function(r){return function(r){return!!r&&"object"==typeof r}(r)&&!function(r){var t=Object.prototype.toString.call(r);return"[object RegExp]"===t||"[object Date]"===t||function(r){return r.$$typeof===e}(r)}(r)},e="function"==typeof Symbol&&Symbol.for?Symbol.for("react.element"):60103;function t(r,e){return!1!==e.clone&&e.isMergeableObject(r)?u(Array.isArray(r)?[]:{},r,e):r}function n(r,e,n){return r.concat(e).map(function(r){return t(r,n)})}function o(r){return Object.keys(r).concat(function(r){return Object.getOwnPropertySymbols?Object.getOwnPropertySymbols(r).filter(function(e){return r.propertyIsEnumerable(e)}):[]}(r))}function c(r,e){try{return e in r}catch(r){return!1}}function u(e,i,a){(a=a||{}).arrayMerge=a.arrayMerge||n,a.isMergeableObject=a.isMergeableObject||r,a.cloneUnlessOtherwiseSpecified=t;var f=Array.isArray(i);return f===Array.isArray(e)?f?a.arrayMerge(e,i,a):function(r,e,n){var i={};return n.isMergeableObject(r)&&o(r).forEach(function(e){i[e]=t(r[e],n)}),o(e).forEach(function(o){(function(r,e){return c(r,e)&&!(Object.hasOwnProperty.call(r,e)&&Object.propertyIsEnumerable.call(r,e))})(r,o)||(i[o]=c(r,o)&&n.isMergeableObject(e[o])?function(r,e){if(!e.customMerge)return u;var t=e.customMerge(r);return"function"==typeof t?t:u}(o,n)(r[o],e[o],n):t(e[o],n))}),i}(e,i,a):t(i,a)}u.all=function(r,e){if(!Array.isArray(r))throw new Error("first argument should be an array");return r.reduce(function(r,t){return u(r,t,e)},{})};var i=u;function a(r){var e=(r=r||{}).storage||window&&window.localStorage,t=r.key||"vuex";function n(r,e){var t=e.getItem(r);try{return void 0!==t?JSON.parse(t):void 0}catch(r){}}function o(){return!0}function c(r,e,t){return t.setItem(r,JSON.stringify(e))}function u(r,e){return Array.isArray(e)?e.reduce(function(e,t){return function(r,e,t,n){return!/__proto__/.test(e)&&((e=e.split?e.split("."):e.slice(0)).slice(0,-1).reduce(function(r,e){return r[e]=r[e]||{}},r)[e.pop()]=t),r}(e,t,(n=r,void 0===(n=((o=t).split?o.split("."):o).reduce(function(r,e){return r&&r[e]},n))?void 0:n));var n,o},{}):r}function a(r){return function(e){return r.subscribe(e)}}(r.assertStorage||function(){e.setItem("@@",1),e.removeItem("@@")})(e);var f,s=function(){return(r.getState||n)(t,e)};return r.fetchBeforeUse&&(f=s()),function(n){r.fetchBeforeUse||(f=s()),"object"==typeof f&&null!==f&&(n.replaceState(r.overwrite?f:i(n.state,f,{arrayMerge:r.arrayMerger||function(r,e){return e},clone:!1})),(r.rehydrated||function(){})(n)),(r.subscriber||a)(n)(function(n,i){(r.filter||o)(n)&&(r.setState||c)(t,(r.reducer||u)(i,r.paths),e)})}}/* harmony default export */ __webpack_exports__["default"] = (a);
+//# sourceMappingURL=vuex-persistedstate.es.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/vuex/dist/vuex.esm.js":
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!
@@ -116475,6 +116771,10 @@ var authApi = {
         Authorization: 'Bearer ' + token
       }
     });
+  },
+  update: function update(data) {
+    var url = '/auth/profile';
+    return _axiosClient__WEBPACK_IMPORTED_MODULE_0__["default"].put(url, data);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (authApi);
@@ -118242,12 +118542,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/auth */ "./resources/js/store/modules/auth.js");
 /* harmony import */ var _modules_post__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/post */ "./resources/js/store/modules/post.js");
+/* harmony import */ var vuex_persistedstate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex-persistedstate */ "./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js");
+
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
+  plugins: [Object(vuex_persistedstate__WEBPACK_IMPORTED_MODULE_4__["default"])()],
   modules: {
     auth: _modules_auth__WEBPACK_IMPORTED_MODULE_2__["default"],
     post: _modules_post__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -118280,8 +118583,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var state = {
-  token: localStorage.getItem('token') || null,
-  user: JSON.parse(localStorage.getItem('user')) || null
+  token: null,
+  user: null
 };
 var getters = {
   authenticated: function authenticated(state) {
@@ -118343,7 +118646,7 @@ var actions = {
 
             case 3:
               response = _context2.sent;
-              dispatch('attempt', response.access_token);
+              return _context2.abrupt("return", dispatch('attempt', response.access_token));
 
             case 5:
             case "end":
@@ -118370,32 +118673,28 @@ var actions = {
               return _context3.abrupt("return");
 
             case 3:
-              localStorage.setItem('token', token);
               commit('SET_TOKEN', token);
-              _context3.prev = 5;
-              _context3.next = 8;
+              _context3.prev = 4;
+              _context3.next = 7;
               return _api_authApi__WEBPACK_IMPORTED_MODULE_2__["default"].me(token);
 
-            case 8:
+            case 7:
               response = _context3.sent;
-              localStorage.setItem('user', JSON.stringify(response.data));
               commit('SET_USER', response.data);
-              _context3.next = 18;
+              _context3.next = 14;
               break;
 
-            case 13:
-              _context3.prev = 13;
-              _context3.t0 = _context3["catch"](5);
-              localStorage.removeItem('token');
-              localStorage.removeItem('user');
+            case 11:
+              _context3.prev = 11;
+              _context3.t0 = _context3["catch"](4);
               commit('CLEAR_AUTH_DATA');
 
-            case 18:
+            case 14:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[5, 13]]);
+      }, _callee3, null, [[4, 11]]);
     }))();
   },
   logout: function logout(_ref4) {
@@ -118406,11 +118705,9 @@ var actions = {
           switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
-              localStorage.removeItem('token');
-              localStorage.removeItem('user');
               commit('CLEAR_AUTH_DATA');
 
-            case 4:
+            case 2:
             case "end":
               return _context4.stop();
           }
@@ -118418,9 +118715,31 @@ var actions = {
       }, _callee4);
     }))();
   },
-  refreshToken: function refreshToken(_ref5, token) {
-    var commit = _ref5.commit;
-    localStorage.setItem('token', token);
+  updateProfile: function updateProfile(_ref5, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return _api_authApi__WEBPACK_IMPORTED_MODULE_2__["default"].update(data);
+
+            case 3:
+              response = _context5.sent;
+              commit('SET_USER', response.data);
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  },
+  refreshToken: function refreshToken(_ref6, token) {
+    var commit = _ref6.commit;
     commit('SET_TOKEN', token);
   }
 };

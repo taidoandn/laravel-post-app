@@ -17,6 +17,11 @@ const authApi = {
             headers: { Authorization: 'Bearer ' + token },
         });
     },
+
+    update(data){
+        const url = '/auth/profile';
+        return axiosClient.put(url, data);
+    }
 };
 
 export default authApi;

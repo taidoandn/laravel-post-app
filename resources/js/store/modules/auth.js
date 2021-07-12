@@ -2,8 +2,8 @@ import axios from 'axios';
 import authApi from '@/api/authApi';
 
 const state = {
-    token: localStorage.getItem('token') || null,
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    token: null,
+    user: null,
 };
 
 const getters = {
@@ -33,34 +33,32 @@ const actions = {
 
     async register({ dispatch }, data) {
         let response = await authApi.register(data);
-        dispatch('attempt', response.access_token);
+        return dispatch('attempt', response.access_token);
     },
 
     async attempt({ commit }, token) {
         if (!token) return;
 
-        localStorage.setItem('token', token);
         commit('SET_TOKEN', token);
 
         try {
             let response = await authApi.me(token);
-            localStorage.setItem('user', JSON.stringify(response.data));
             commit('SET_USER', response.data);
         } catch (error) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
             commit('CLEAR_AUTH_DATA');
         }
     },
 
     async logout({ commit }) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
         commit('CLEAR_AUTH_DATA');
     },
 
+    async updateProfile({ commit }, data) {
+        let response = await authApi.update(data);
+        commit('SET_USER', response.data);
+    },
+
     refreshToken({ commit }, token) {
-        localStorage.setItem('token', token);
         commit('SET_TOKEN', token);
     },
 };
