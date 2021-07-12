@@ -5,8 +5,8 @@ mix.webpackConfig({
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            '@': path.resolve('resources/js'),
-            '@Components': path.resolve('resources/js/components'),
+            '@': path.resolve(__dirname, 'resources/js'),
+            '@Components': path.resolve(__dirname, 'resources/js/components'),
         },
     },
 });
@@ -22,7 +22,6 @@ mix.webpackConfig({
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').sass(
-    'resources/sass/app.scss',
-    'public/css',
-);
+mix.js('resources/js/app.js', 'public/js')
+    .vue()
+    .sass('resources/sass/app.scss', 'public/css');
