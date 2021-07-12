@@ -8,7 +8,7 @@ import VueObserveVisibility from 'vue-observe-visibility';
 require('./bootstrap');
 require('./echo');
 
-window.Vue = require('vue');
+window.Vue = require('vue').default;
 window.toastr = require('toastr');
 toastr.options = {
     progressBar: true,
