@@ -3547,7 +3547,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./echo */ "./resources/js/echo.js");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
 window.toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
 toastr.options = {
   progressBar: true,
