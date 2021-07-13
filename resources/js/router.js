@@ -1,13 +1,6 @@
 import Vue from 'vue';
 import store from './store';
 import Router from 'vue-router';
-import Home from './pages/Home';
-import About from './pages/About';
-import NotFound from './pages/NotFound';
-import Post from './pages/post/index';
-import Login from './pages/auth/Login';
-import Profile from './pages/auth/Profile';
-import Register from './pages/auth/Register';
 
 Vue.use(Router);
 
@@ -15,7 +8,7 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: Login,
+        component: () => import(/* webpackChunkName: "routes/login" */ './pages/auth/Login'),
         meta: {
             requiresGuest: true,
         },
@@ -23,7 +16,7 @@ const routes = [
     {
         path: '/register',
         name: 'register',
-        component: Register,
+        component: () => import(/* webpackChunkName: "routes/register" */ './pages/auth/Register'),
         meta: {
             requiresGuest: true,
         },
@@ -32,17 +25,17 @@ const routes = [
         path: '/',
         name: 'home',
         alias: '/home',
-        component: Home,
+        component: () => import(/* webpackChunkName: "routes/home" */ './pages/Home'),
     },
     {
         path: '/about',
         name: 'about',
-        component: About,
+        component: () => import(/* webpackChunkName: "routes/about" */ './pages/About'),
     },
     {
         path: '/profile',
         name: 'profile',
-        component: Profile,
+        component: () => import(/* webpackChunkName: "routes/profile" */ './pages/auth/Profile'),
         meta: {
             requiresAuth: true,
         },
@@ -50,7 +43,7 @@ const routes = [
     {
         path: '/posts',
         name: 'posts',
-        component: Post,
+        component: () => import(/* webpackChunkName: "routes/posts" */ './pages/post/Index'),
         meta: {
             requiresAuth: true,
         },
@@ -58,7 +51,7 @@ const routes = [
     {
         path: '*',
         name: 'notfound',
-        component: NotFound,
+        component: () => import(/* webpackChunkName: "routes/notfound" */ './pages/NotFound'),
     },
 ];
 
