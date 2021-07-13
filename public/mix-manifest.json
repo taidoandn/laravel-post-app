@@ -1,4 +1,11 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/routes/login.js": "/js/routes/login.js",
+    "/js/routes/register.js": "/js/routes/register.js",
+    "/js/routes/home.js": "/js/routes/home.js",
+    "/js/routes/about.js": "/js/routes/about.js",
+    "/js/routes/profile.js": "/js/routes/profile.js",
+    "/js/routes/posts.js": "/js/routes/posts.js",
+    "/js/routes/notfound.js": "/js/routes/notfound.js",
     "/css/app.css": "/css/app.css"
 }
