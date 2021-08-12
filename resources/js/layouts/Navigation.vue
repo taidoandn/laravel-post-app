@@ -97,9 +97,9 @@
     import { mapActions, mapGetters } from 'vuex';
     export default {
         computed: {
-            ...mapGetters({
-                authenticated: 'auth/authenticated',
-                user: 'auth/user',
+            ...mapGetters('auth', {
+                authenticated: 'authenticated',
+                user: 'user',
             }),
         },
         methods: {

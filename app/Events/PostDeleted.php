@@ -13,7 +13,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class PostDeleted implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets /*, SerializesModels*/;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $post;
 

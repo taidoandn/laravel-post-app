@@ -2,35 +2,35 @@ import axios from 'axios';
 import postApi from '@/api/postApi';
 
 const state = {
-    posts: [],
+    items: [],
 };
 
 const getters = {
-    posts: state => state.posts,
+    items: state => state.items,
 };
 
 const mutations = {
     UPDATE_POST(state, post) {
-        let index = state.posts.findIndex(p => p.id === post.id);
+        let index = state.items.findIndex(p => p.id === post.id);
         if (index !== -1) {
-            state.posts.splice(index, 1, post);
+            state.items.splice(index, 1, post);
         }
     },
 
     REMOVE_POST(state, id) {
-        state.posts = state.posts.filter(p => p.id !== id);
+        state.items = state.items.filter(p => p.id !== id);
     },
 
     PREPEND_POST(state, post) {
-        state.posts = [post, ...state.posts];
+        state.items = [post, ...state.items];
     },
 
     PUSH_POSTS(state, posts) {
         let filteredPosts = [...posts].filter(post => {
-            return !state.posts.map(p => p.id).includes(post.id);
+            return !state.items.map(p => p.id).includes(post.id);
         });
 
-        state.posts = [...state.posts, ...filteredPosts];
+        state.items = [...state.items, ...filteredPosts];
     },
 };
 

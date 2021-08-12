@@ -26,13 +26,13 @@
         },
         computed: {
             ...mapGetters({
-                posts: 'post/posts',
+                posts: 'posts/items',
             }),
         },
 
         methods: {
             ...mapActions({
-                getPosts: 'post/getPosts',
+                getPosts: 'posts/getPosts',
             }),
 
             loadPosts() {

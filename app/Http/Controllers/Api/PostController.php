@@ -6,9 +6,8 @@ use App\Models\Post;
 use App\Events\PostCreated;
 use App\Events\PostDeleted;
 use App\Events\PostUpdated;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 
 class PostController extends Controller
@@ -20,9 +19,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user','likes','likers')
-                ->latest()
-                ->paginate(5);
+        $posts = Post::with('user', 'likes', 'likers')
+            ->latest()
+            ->paginate(5);
 
         return PostResource::collection($posts);
     }
@@ -35,7 +34,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = $request->user()->posts()->create($request->only('body'));
+        $post = auth()->user()->posts()->create($request->validated());
 
         broadcast(new PostCreated($post))->toOthers();
 
@@ -57,7 +56,7 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $post->update($request->only('body'));
+        $post->update($request->validated());
 
         broadcast(new PostUpdated($post))->toOthers();
 
@@ -68,9 +67,9 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
 
-        $post->delete();
-
         broadcast(new PostDeleted($post))->toOthers();
+
+        $post->delete();
 
         return response(null, 200);
     }

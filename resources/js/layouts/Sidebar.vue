@@ -4,15 +4,27 @@
             <router-link class="list-group-item" :to="{ name: 'profile' }">
                 Profile
             </router-link>
-            <router-link class="list-group-item" :to="{ name: 'home' }">
+            <a href="#" class="list-group-item" @click.prevent="handeLogout">
                 Logout
-            </router-link>
+            </a>
         </ul>
     </div>
 </template>
 
 <script>
-    export default {};
+    import { mapActions } from 'vuex';
+    export default {
+        methods: {
+            ...mapActions({
+                logout: 'auth/logout',
+            }),
+            handeLogout() {
+                this.logout().then(() => {
+                    this.$router.push({ name: 'login' });
+                });
+            },
+        },
+    };
 </script>
 
 <style></style>

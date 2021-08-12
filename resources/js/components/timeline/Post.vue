@@ -63,15 +63,17 @@
         },
         methods: {
             ...mapActions({
-                deletePost: 'post/deletePost',
+                deletePost: 'posts/deletePost',
             }),
             edit() {
                 this.tempBody = this.body;
                 this.editing = true;
             },
             async remove(id) {
-                await this.deletePost(id);
-                toastr.success('Delete successful!', 'Success!');
+                if (confirm('Are you sure to delete this post?')) {
+                    await this.deletePost(id);
+                    toastr.success('Delete successful!', 'Success!');
+                }
             },
             cancel() {
                 this.body = this.tempBody;

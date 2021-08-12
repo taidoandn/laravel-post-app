@@ -39,11 +39,7 @@
                 ];
             },
             classes() {
-                return [
-                    'btn',
-                    'btn-sm',
-                    this.post.user.liked ? 'btn-danger' : 'btn-primary',
-                ];
+                return this.post.user.liked ? 'btn-danger' : 'btn-primary';
             },
             canLikeOrUnLike() {
                 if (this.post.user.owner) {
@@ -55,10 +51,11 @@
 
         methods: {
             pluralize,
-            ...mapActions({
-                likePost: 'post/likePost',
-                unLikePost: 'post/unLikePost',
+            ...mapActions('posts', {
+                likePost: 'likePost',
+                unLikePost: 'unLikePost',
             }),
+
             async toggleLike() {
                 if (this.post.user.liked) {
                     await this.unLikePost(this.post.id);

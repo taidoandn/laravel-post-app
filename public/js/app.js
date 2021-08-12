@@ -1947,9 +1947,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)({
-    authenticated: 'auth/authenticated',
-    user: 'auth/user'
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('auth', {
+    authenticated: 'authenticated',
+    user: 'user'
   })),
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)({
     logout: 'auth/logout'
@@ -2319,16 +2319,16 @@ __webpack_require__.r(__webpack_exports__);
 
 Echo.channel('posts').listen('PostCreated', function (e) {
   console.log(e);
-  _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('post/getPost', e.post.id);
+  _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('posts/getPost', e.post.id);
 }).listen('PostUpdated', function (e) {
   console.log(e);
-  _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('post/refreshPost', e.post.id);
+  _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('posts/refreshPost', e.post.id);
 }).listen('PostDeleted', function (e) {
   console.log(e);
-  _store__WEBPACK_IMPORTED_MODULE_0__.default.commit('post/REMOVE_POST', e.post.id);
+  _store__WEBPACK_IMPORTED_MODULE_0__.default.commit('posts/REMOVE_POST', e.post.id);
 }).listen('PostLiked', function (e) {
   console.log(e);
-  _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('post/refreshPost', e.post.id);
+  _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('posts/refreshPost', e.post.id);
 });
 
 /***/ }),
@@ -2474,7 +2474,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/auth */ "./resources/js/store/modules/auth.js");
-/* harmony import */ var _modules_post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/post */ "./resources/js/store/modules/post.js");
+/* harmony import */ var _modules_posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/posts */ "./resources/js/store/modules/posts.js");
 /* harmony import */ var vuex_persistedstate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex-persistedstate */ "./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js");
 
 
@@ -2495,7 +2495,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_4__.default.Store({
   })],
   modules: {
     auth: _modules_auth__WEBPACK_IMPORTED_MODULE_0__.default,
-    post: _modules_post__WEBPACK_IMPORTED_MODULE_1__.default
+    posts: _modules_posts__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -2697,10 +2697,10 @@ var actions = {
 
 /***/ }),
 
-/***/ "./resources/js/store/modules/post.js":
-/*!********************************************!*\
-  !*** ./resources/js/store/modules/post.js ***!
-  \********************************************/
+/***/ "./resources/js/store/modules/posts.js":
+/*!*********************************************!*\
+  !*** ./resources/js/store/modules/posts.js ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2734,39 +2734,39 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 var state = {
-  posts: []
+  items: []
 };
 var getters = {
-  posts: function posts(state) {
-    return state.posts;
+  items: function items(state) {
+    return state.items;
   }
 };
 var mutations = {
   UPDATE_POST: function UPDATE_POST(state, post) {
-    var index = state.posts.findIndex(function (p) {
+    var index = state.items.findIndex(function (p) {
       return p.id === post.id;
     });
 
     if (index !== -1) {
-      state.posts.splice(index, 1, post);
+      state.items.splice(index, 1, post);
     }
   },
   REMOVE_POST: function REMOVE_POST(state, id) {
-    state.posts = state.posts.filter(function (p) {
+    state.items = state.items.filter(function (p) {
       return p.id !== id;
     });
   },
   PREPEND_POST: function PREPEND_POST(state, post) {
-    state.posts = [post].concat(_toConsumableArray(state.posts));
+    state.items = [post].concat(_toConsumableArray(state.items));
   },
   PUSH_POSTS: function PUSH_POSTS(state, posts) {
     var filteredPosts = _toConsumableArray(posts).filter(function (post) {
-      return !state.posts.map(function (p) {
+      return !state.items.map(function (p) {
         return p.id;
       }).includes(post.id);
     });
 
-    state.posts = [].concat(_toConsumableArray(state.posts), _toConsumableArray(filteredPosts));
+    state.items = [].concat(_toConsumableArray(state.items), _toConsumableArray(filteredPosts));
   }
 };
 var actions = {

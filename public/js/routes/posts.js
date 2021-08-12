@@ -125,7 +125,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)({
-    createPost: 'post/createPost'
+    createPost: 'posts/createPost'
   })), {}, {
     submit: function submit() {
       var _this = this;
@@ -247,7 +247,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)({
-    updatePost: 'post/updatePost'
+    updatePost: 'posts/updatePost'
   })), {}, {
     handleUpdate: function handleUpdate() {
       var _this = this;
@@ -487,7 +487,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)({
-    deletePost: 'post/deletePost'
+    deletePost: 'posts/deletePost'
   })), {}, {
     edit: function edit() {
       this.tempBody = this.body;
@@ -501,13 +501,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                if (!confirm('Are you sure to delete this post?')) {
+                  _context.next = 4;
+                  break;
+                }
+
+                _context.next = 3;
                 return _this.deletePost(id);
 
-              case 2:
+              case 3:
                 toastr.success('Delete successful!', 'Success!');
 
-              case 3:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -588,7 +593,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return ['fa', this.post.user.liked ? 'fa-thumbs-down' : 'fa-thumbs-up'];
     },
     classes: function classes() {
-      return ['btn', 'btn-sm', this.post.user.liked ? 'btn-danger' : 'btn-primary'];
+      return this.post.user.liked ? 'btn-danger' : 'btn-primary';
     },
     canLikeOrUnLike: function canLikeOrUnLike() {
       if (this.post.user.owner) {
@@ -600,9 +605,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread(_objectSpread({
     pluralize: (pluralize__WEBPACK_IMPORTED_MODULE_1___default())
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)({
-    likePost: 'post/likePost',
-    unLikePost: 'post/unLikePost'
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('posts', {
+    likePost: 'likePost',
+    unLikePost: 'unLikePost'
   })), {}, {
     toggleLike: function toggleLike() {
       var _this = this;
@@ -689,10 +694,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
-    posts: 'post/posts'
+    posts: 'posts/items'
   })),
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)({
-    getPosts: 'post/getPosts'
+    getPosts: 'posts/getPosts'
   })), {}, {
     loadPosts: function loadPosts() {
       var _this = this;
